@@ -4,8 +4,8 @@
 *.pdb
 *.user
 *.vscode
-bin/
-obj/
+MRMS/bin/
+MRMS/obj/
 
 # Visual Studio
 *.suo
@@ -17,6 +17,7 @@ obj/
 *.user
 *.vspscc
 *.vssscc
+.vs/
 
 # Rider
 .idea/
