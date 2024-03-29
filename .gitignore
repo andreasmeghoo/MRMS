@@ -18,6 +18,7 @@ MRMS/obj/
 *.vspscc
 *.vssscc
 .vs/
+/vs/MRMS
 
 # Rider
 .idea/
