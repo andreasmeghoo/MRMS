@@ -1,0 +1,78 @@
+﻿@page
+@model MRMS.Pages.Consultations.IndexModel
+
+@{
+    ViewData["Title"] = "Consultations";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">New Consultation</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].AppointmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].DoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].NurseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].PatientHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].ExamDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].CarePlan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consultation[0].Diagnosis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Consultation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NurseId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarePlan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ConsultationId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ConsultationId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ConsultationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

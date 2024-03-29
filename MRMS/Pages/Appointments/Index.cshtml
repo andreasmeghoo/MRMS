@@ -1,0 +1,66 @@
+﻿@page
+@model MRMS.Pages.Appointments.IndexModel
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">New Appointment</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].PreferredDoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].SpecialAccomodations)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Appointment) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.PreferredDoctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialAccomodations)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,69 @@
+﻿@page
+@model MRMS.Pages.Consultations.EditModel
+
+@{
+    ViewData["Title"] = "Edit Consultation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Consultation.ConsultationId" />
+            <div class="form-group">
+                <label asp-for="Consultation.AppointmentId" class="control-label"></label>
+                <input asp-for="Consultation.AppointmentId" class="form-control" />
+                <span asp-validation-for="Consultation.AppointmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.DoctorId" class="control-label"></label>
+                <input asp-for="Consultation.DoctorId" class="form-control" />
+                <span asp-validation-for="Consultation.DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.NurseId" class="control-label"></label>
+                <input asp-for="Consultation.NurseId" class="form-control" />
+                <span asp-validation-for="Consultation.NurseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.PatientHistory" class="control-label"></label>
+                <input asp-for="Consultation.PatientHistory" class="form-control" />
+                <span asp-validation-for="Consultation.PatientHistory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.ExamDetails" class="control-label"></label>
+                <input asp-for="Consultation.ExamDetails" class="form-control" />
+                <span asp-validation-for="Consultation.ExamDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.CarePlan" class="control-label"></label>
+                <input asp-for="Consultation.CarePlan" class="form-control" />
+                <span asp-validation-for="Consultation.CarePlan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.Comments" class="control-label"></label>
+                <input asp-for="Consultation.Comments" class="form-control" />
+                <span asp-validation-for="Consultation.Comments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.Diagnosis" class="control-label"></label>
+                <input asp-for="Consultation.Diagnosis" class="form-control" />
+                <span asp-validation-for="Consultation.Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

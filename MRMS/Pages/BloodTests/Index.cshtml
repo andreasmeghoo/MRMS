@@ -1,0 +1,61 @@
+﻿@page
+@model MRMS.Pages.BloodTests.IndexModel
+
+@{
+    ViewData["Title"] = "Blood Tests";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Order Blood Test</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodTest[0].BloodTestId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodTest[0].ConsultationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodTest[0].Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodTest[0].PerformedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodTest[0].PerformedById)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BloodTest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BloodTestId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformedById)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.BloodTestId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.BloodTestId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.BloodTestId">Delete</a>
+                <a asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
