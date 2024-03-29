@@ -1,0 +1,36 @@
+# .NET Core
+*.dll
+*.exe
+*.pdb
+*.user
+*.vscode
+bin/
+obj/
+
+# Visual Studio
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.csproj
+*.xproj
+*.user
+*.vspscc
+*.vssscc
+
+# Rider
+.idea/
+
+# Resharper
+_ReSharper*/
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Other
+node_modules/
