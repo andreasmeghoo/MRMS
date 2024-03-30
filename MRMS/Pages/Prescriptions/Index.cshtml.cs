@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using MRMS.Models;
 
 namespace MRMS.Pages.Prescriptions
 {
+    [Authorize(Roles = "doctor, admin, nurse, patient")]
     public class IndexModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;

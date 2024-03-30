@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240329044657_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,38 +309,6 @@ namespace MRMS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "061df403-1b70-467a-a739-0b14ed4afdb3",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = "777d4654-ea2c-44c0-95e6-7aa8b091aa08",
-                            Name = "patient",
-                            NormalizedName = "patient"
-                        },
-                        new
-                        {
-                            Id = "6a5b27c7-e859-46c6-b490-4b734cf380e0",
-                            Name = "receptionist",
-                            NormalizedName = "receptionist"
-                        },
-                        new
-                        {
-                            Id = "f212c378-9f8b-4c14-afc4-85d2990635d9",
-                            Name = "nurse",
-                            NormalizedName = "nurse"
-                        },
-                        new
-                        {
-                            Id = "7f598720-dc8b-49a0-9136-15484948a37a",
-                            Name = "doctor",
-                            NormalizedName = "doctor"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
