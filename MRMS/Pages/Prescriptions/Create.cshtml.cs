@@ -11,7 +11,7 @@ using MRMS.Models;
 
 namespace MRMS.Pages.Prescriptions
 {
-    [Authorize(Roles="doctor")]
+    [Authorize(Roles="doctor, admin")]
     public class CreateModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;

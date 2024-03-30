@@ -12,7 +12,7 @@ using MRMS.Models;
 
 namespace MRMS.Pages.Prescriptions
 {
-    [Authorize]
+    [Authorize(Roles = "doctor, admin")]
     public class EditModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;

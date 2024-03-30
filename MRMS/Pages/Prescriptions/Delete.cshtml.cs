@@ -11,7 +11,7 @@ using MRMS.Models;
 
 namespace MRMS.Pages.Prescriptions
 {
-    [Authorize]
+    [Authorize(Roles = "doctor, admin")]
     public class DeleteModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;

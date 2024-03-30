@@ -11,7 +11,7 @@ using MRMS.Models;
 
 namespace MRMS.Pages.BloodTests
 {
-    [Authorize]
+    [Authorize(Roles = "doctor, nurse")]
     public class DeleteModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
