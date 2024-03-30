@@ -12,6 +12,7 @@ builder.Services.AddDbContext<MRMSContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MRMSContext") ?? throw new InvalidOperationException("Connection string 'MRMSContext' not found.")));
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MRMSContext>();
 
 var app = builder.Build();
