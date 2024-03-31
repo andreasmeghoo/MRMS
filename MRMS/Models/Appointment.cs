@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MRMS.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MRMS.Models
 {
@@ -13,6 +14,7 @@ namespace MRMS.Models
 
         public String? SpecialAccomodations { get; set; }
 
+        public AppointmentStatus Status { get; set; }
 
     }
 }
