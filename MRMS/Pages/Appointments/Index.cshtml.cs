@@ -30,5 +30,19 @@ namespace MRMS.Pages.Appointments
                 Appointment = await _context.Appointment.ToListAsync();
             }
         }
+
+        public void OnPostArrive(int id)
+        {
+            var appointment = _context.Appointment.Single(x => x.AppointmentId == id);
+            if (appointment != null)
+            {
+                appointment.Status = Enums.AppointmentStatus.Arrived;
+                _context.SaveChanges();
+                if (_context.Appointment != null)
+                {
+                    Appointment = _context.Appointment.ToList();
+                }
+            }
+        }
     }
 }

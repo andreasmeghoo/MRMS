@@ -35,32 +35,42 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Appointment) {
-        <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.PreferredDoctorId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatientId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialAccomodations)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
-}
+            @foreach (var item in Model.Appointment) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreferredDoctorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SpecialAccomodations)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                    @if (item.Status == Enums.AppointmentStatus.ArrivalPending)
+                    { 
+                        <form asp-page-handler="arrive" method="post">
+                            <input type="hidden" name="id" value="@item.AppointmentId" />
+                            <button type="submit" name="handler" value="ArrivePatient" class="w-50 btn btn-sm btn-outline-primary">Arrive Patient</button>
+                        </form>
+                    }else
+                    {
+                        <p>Patient has arrived</p>
+                    }
+                </td>
+                </tr>
+            }
     </tbody>
 </table>
