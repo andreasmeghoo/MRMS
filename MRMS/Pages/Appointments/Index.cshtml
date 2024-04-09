@@ -60,14 +60,20 @@
                         <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
                         <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
                     @if (item.Status == Enums.AppointmentStatus.ArrivalPending)
-                    { 
-                        <form asp-page-handler="arrive" method="post">
+                    {
+                        <form asp-page-handler="updateStatus" method="post">
                             <input type="hidden" name="id" value="@item.AppointmentId" />
-                            <button type="submit" name="handler" value="ArrivePatient" class="w-50 btn btn-sm btn-outline-primary">Arrive Patient</button>
+                            <input type="hidden" name="newStatus" value="@Enums.AppointmentStatus.Arrived"/>
+                            <button type="submit" name="handler" class="w-50 btn btn-sm btn-outline-primary">Arrive Patient</button>
                         </form>
                     }else
                     {
                         <p>Patient has arrived</p>
+                        <form asp-page-handler="updateStatus" method="post">
+                            <input type="hidden" name="id" value="@item.AppointmentId" />
+                            <input type="hidden" name="newStatus" value="@Enums.AppointmentStatus.ArrivalPending" />
+                            <button type="submit" name="handler" class="w-50 btn btn-sm btn-outline-primary">Undo</button>
+                        </form>
                     }
                 </td>
                 </tr>

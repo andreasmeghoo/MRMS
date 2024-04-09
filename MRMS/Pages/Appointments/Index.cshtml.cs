@@ -31,12 +31,12 @@ namespace MRMS.Pages.Appointments
             }
         }
 
-        public void OnPostArrive(int id)
+        public void OnPostUpdateStatus(int id, Enums.AppointmentStatus newStatus)
         {
             var appointment = _context.Appointment.Single(x => x.AppointmentId == id);
             if (appointment != null)
             {
-                appointment.Status = Enums.AppointmentStatus.Arrived;
+                appointment.Status = newStatus;
                 _context.SaveChanges();
                 if (_context.Appointment != null)
                 {
