@@ -59,7 +59,7 @@
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                    <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a> <br>
                     @if (User.IsInRole("admin"))
                     {
                         <div class="btn-group">
@@ -79,32 +79,17 @@
                                     .GetMember(appointmentStatus.ToString())[0]
                                     .GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), false)[0])
                                     .Name;
-                                <li><a class="dropdown-item">@optionName</a></li>
+                                <li>
+                                        <form asp-page-handler="updateStatus" method="post">
+                                            <input type="hidden" name="id" value="@item.AppointmentId" />
+                                            <input type="hidden" name="newStatus" value="@appointmentStatus" />
+                                            <button type="submit" class="dropdown-item">@optionName</button>
+                                        </form>
+                                </li>
                                 
                                 }
                             </ul>
                         </div>
-                    }
-                    @if (User.IsInRole("receptionist"))
-                    {
-                        @switch (item.Status)
-                        {
-                            case Enums.AppointmentStatus.ArrivalPending:
-                                <form asp-page-handler="updateStatus" method="post">
-                                    <input type="hidden" name="id" value="@item.AppointmentId" />
-                                    <input type="hidden" name="newStatus" value="@Enums.AppointmentStatus.Arrived" />
-                                    <button type="submit" name="handler" class="w-50 btn btn-sm btn-outline-primary">Arrive Patient</button>
-                                </form>
-                                break;
-                            case Enums.AppointmentStatus.Arrived:
-                                <p>Patient has arrived</p>
-                                <form asp-page-handler="updateStatus" method="post">
-                                    <input type="hidden" name="id" value="@item.AppointmentId" />
-                                    <input type="hidden" name="newStatus" value="@Enums.AppointmentStatus.ArrivalPending" />
-                                    <button type="submit" name="handler" class="w-50 btn btn-sm btn-outline-primary">Undo</button>
-                                </form>
-                                break;
-                        }
                     }
                 </td>
             </tr>
