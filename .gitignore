@@ -6,6 +6,8 @@
 *.vscode
 MRMS/bin/
 MRMS/obj/
+MRMSTests/bin/
+MRMSTests/obj/
 
 # Visual Studio
 *.suo

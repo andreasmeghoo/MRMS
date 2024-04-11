@@ -1,4 +1,9 @@
 ﻿@page
+@using MRMS.Enums;
+@using System.ComponentModel.DataAnnotations;
+@using MRMS.Models;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> _userManager;
 @model MRMS.Pages.Appointments.IndexModel
 
 @{
@@ -35,32 +40,73 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Appointment) {
-        <tr>
-            <td>
+        @foreach (var item in Model.Appointment)
+        {
+            <tr>
+                <td>
                     @Html.DisplayFor(modelItem => item.PreferredDoctorId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatientId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialAccomodations)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialAccomodations)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a> <br>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @{
+                                    var currentStatusName = ((DisplayStatusAttribute)typeof(AppointmentStatus)
+                                    .GetMember(item.Status.ToString())[0]
+                                    .GetCustomAttributes(typeof(DisplayStatusAttribute), false)[0])
+                                    .Name;
+                                }
+                                @currentStatusName
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach(var appointmentStatus in AppointmentStatus.GetValues(typeof(AppointmentStatus)))
+                                {
+                                    var optionName = ((DisplayActionAttribute)typeof(AppointmentStatus)
+                                    .GetMember(appointmentStatus.ToString())[0]
+                                    .GetCustomAttributes(typeof(DisplayActionAttribute), false)[0])
+                                    .Name;
+
+                                var user = await _userManager.GetUserAsync(User);
+                                var roles = await _userManager.GetRolesAsync(user);
+                                var roleAccessAttributes = (RoleAccessAttribute[])typeof(AppointmentStatus)
+                                .GetMember(appointmentStatus.ToString())[0]
+                                .GetCustomAttributes(typeof(RoleAccessAttribute), false);
+
+                                foreach (var roleAccessAttribute in roleAccessAttributes)
+                                {
+                                    if (roles.Contains(roleAccessAttribute.Role))
+                                    {
+                                        <li>
+                                            <form asp-page-handler="updateStatus" method="post">
+                                                <input type="hidden" name="id" value="@item.AppointmentId" />
+                                                <input type="hidden" name="newStatus" value="@appointmentStatus" />
+                                                <button type="submit" class="dropdown-item">@optionName</button>
+                                            </form>
+                                        </li>
+                                    }
+                                }
+                                }
+                            </ul>
+                        </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
