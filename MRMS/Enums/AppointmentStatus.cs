@@ -13,45 +13,65 @@ namespace MRMS.Enums
             Role = role;
         }
     }
+
+    public class DisplayActionAttribute : Attribute
+    {
+        public string Name { get; }
+
+        public DisplayActionAttribute(string name)
+        {
+            Name = name;
+        }
+    }
+
+    public class DisplayStatusAttribute : Attribute
+    {
+        public string Name { get; }
+
+        public DisplayStatusAttribute(string name)
+        {
+            Name = name;
+        }
+    }
     public enum AppointmentStatus
     {
-        [Display(Name =  "Arrival Pending")]
+        [DisplayAction("Arrival Pending"), DisplayStatus("Arrival Pending")]
         [RoleAccess("admin"), RoleAccess("receptionist"), RoleAccess("doctor"), RoleAccess("nurse")]
         ArrivalPending,
 
-        [Display(Name = "Arrived")]
+        [DisplayAction("Arrived"), DisplayStatus("Arrived")]
         [RoleAccess("admin"), RoleAccess("receptionist"),  RoleAccess("doctor"), RoleAccess("nurse")]
         Arrived,
 
-        [Display(Name = "Appointment Missed")]
+        [DisplayAction("Appointment Missed"), DisplayStatus("Appointment Missed")]
         [RoleAccess("admin"), RoleAccess("receptionist"), RoleAccess("doctor"), RoleAccess("nurse")]
         MissedAppointment,
 
-        [Display(Name = "Left Prematurely")]
+        [DisplayAction("Left Prematurely"), DisplayStatus("Left Prematurely")]
         [RoleAccess("admin"), RoleAccess("receptionist"),  RoleAccess("doctor"), RoleAccess("nurse")]
         LeftPrematurely,
 
-        [Display(Name = "Nurse Consulting Patient")]
+        [DisplayAction("Send In Patient"), DisplayStatus("Nurse Sent In Patient")]
         [RoleAccess("admin"), RoleAccess("nurse")]
         NurseSentInPatient,
 
-        [Display(Name = "Nurse Consultation Completed")]
+        [DisplayAction("Finish Consultation"), DisplayStatus("Nurse Consultation Completed")]
         [RoleAccess("admin"), RoleAccess("nurse")]
         SeenNurse,
 
-        [Display(Name = "Doctor Consulting Patient")]
+        [DisplayAction("Send In Patient"), DisplayStatus("Doctor Sent In Patient")]
         [RoleAccess("admin"), RoleAccess("doctor")]
         DoctorSentInPatient,
 
-        [Display(Name = "Appointment Completed")]
+        [DisplayAction("Finish Appointment"), DisplayStatus("Appointment Completed")]
         [RoleAccess("admin"), RoleAccess("receptionist"), RoleAccess("doctor")]
         AppointmentComplete,
 
-        [Display(Name = "Immediate Tests Underway")]
+        [DisplayAction("Order Immediate Tests"), DisplayStatus("Immediate Tests Ordered")]
         [RoleAccess("admin"), RoleAccess("doctor"), RoleAccess("nurse")]
         ImmediateTestsOrdered,
 
-        [Display(Name = "Tests Completed")]
+        [DisplayAction("Finish Testing"), DisplayStatus("Tests Completed")]
         [RoleAccess("admin"), RoleAccess("doctor"), RoleAccess("nurse")]
         TestsComplete
     }

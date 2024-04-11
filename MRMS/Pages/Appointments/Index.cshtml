@@ -68,9 +68,9 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 @{
-                                    var currentStatusName = ((DisplayAttribute)typeof(AppointmentStatus)
+                                    var currentStatusName = ((DisplayStatusAttribute)typeof(AppointmentStatus)
                                     .GetMember(item.Status.ToString())[0]
-                                    .GetCustomAttributes(typeof(DisplayAttribute), false)[0])
+                                    .GetCustomAttributes(typeof(DisplayStatusAttribute), false)[0])
                                     .Name;
                                 }
                                 @currentStatusName
@@ -78,9 +78,9 @@
                             <ul class="dropdown-menu">
                                 @foreach(var appointmentStatus in AppointmentStatus.GetValues(typeof(AppointmentStatus)))
                                 {
-                                    var optionName = ((DisplayAttribute)typeof(AppointmentStatus)
+                                    var optionName = ((DisplayActionAttribute)typeof(AppointmentStatus)
                                     .GetMember(appointmentStatus.ToString())[0]
-                                    .GetCustomAttributes(typeof(DisplayAttribute), false)[0])
+                                    .GetCustomAttributes(typeof(DisplayActionAttribute), false)[0])
                                     .Name;
 
                                 var user = await _userManager.GetUserAsync(User);
