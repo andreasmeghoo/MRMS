@@ -1,4 +1,10 @@
 ﻿@page
+@using MRMS.Enums;
+@using MRMS.Helpers;
+@using System.ComponentModel.DataAnnotations;
+@using MRMS.Models;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> _userManager;
 @model MRMS.Pages.Appointments.IndexModel
 
 @{
@@ -60,37 +66,46 @@
                     <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a> <br>
-                    @if (User.IsInRole("admin"))
-                    {
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 @{
-                                    var currentStatusName = ((System.ComponentModel.DataAnnotations.DisplayAttribute)typeof(Enums.AppointmentStatus)
+                                    var currentStatusName = ((DisplayAttribute)typeof(AppointmentStatus)
                                     .GetMember(item.Status.ToString())[0]
-                                    .GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), false)[0])
+                                    .GetCustomAttributes(typeof(DisplayAttribute), false)[0])
                                     .Name;
                                 }
                                 @currentStatusName
                             </button>
                             <ul class="dropdown-menu">
-                                @foreach(var appointmentStatus in Enums.AppointmentStatus.GetValues(typeof(Enums.AppointmentStatus)))
+                                @foreach(var appointmentStatus in AppointmentStatus.GetValues(typeof(AppointmentStatus)))
                                 {
-                                    var optionName = ((System.ComponentModel.DataAnnotations.DisplayAttribute)typeof(Enums.AppointmentStatus)
+                                    var optionName = ((DisplayAttribute)typeof(AppointmentStatus)
                                     .GetMember(appointmentStatus.ToString())[0]
-                                    .GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), false)[0])
+                                    .GetCustomAttributes(typeof(DisplayAttribute), false)[0])
                                     .Name;
-                                <li>
-                                        <form asp-page-handler="updateStatus" method="post">
-                                            <input type="hidden" name="id" value="@item.AppointmentId" />
-                                            <input type="hidden" name="newStatus" value="@appointmentStatus" />
-                                            <button type="submit" class="dropdown-item">@optionName</button>
-                                        </form>
-                                </li>
-                                
+
+                                var user = await _userManager.GetUserAsync(User);
+                                var roles = await _userManager.GetRolesAsync(user);
+                                var roleAccessAttributes = (RoleAccessAttribute[])typeof(AppointmentStatus)
+                                .GetMember(appointmentStatus.ToString())[0]
+                                .GetCustomAttributes(typeof(RoleAccessAttribute), false);
+
+                                foreach (var roleAccessAttribute in roleAccessAttributes)
+                                {
+                                    if (roles.Contains(roleAccessAttribute.Role))
+                                    {
+                                        <li>
+                                            <form asp-page-handler="updateStatus" method="post">
+                                                <input type="hidden" name="id" value="@item.AppointmentId" />
+                                                <input type="hidden" name="newStatus" value="@appointmentStatus" />
+                                                <button type="submit" class="dropdown-item">@optionName</button>
+                                            </form>
+                                        </li>
+                                    }
+                                }
                                 }
                             </ul>
                         </div>
-                    }
                 </td>
             </tr>
         }
