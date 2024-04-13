@@ -6,9 +6,9 @@ namespace MRMS.Models
     {
         public int ConsultationId { get; set; }
         public int AppointmentId { get; set; }
-        public int DoctorId { get; set; }
+        public String DoctorId { get; set; }
 
-        public int NurseId { get; set; }
+        public String NurseId { get; set; }
 
         public String PatientHistory {  get; set; } 
 
