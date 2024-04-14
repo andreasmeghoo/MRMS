@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,19 +16,61 @@ namespace MRMS.Pages.Prescriptions
     public class IndexModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public IndexModel(MRMS.Data.MRMSContext context)
+        public IndexModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Prescription> Prescription { get;set; } = default!;
+        public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
-            if (_context.Prescription != null)
+            UserId = _userManager.GetUserId(User);
+
+            if (_context.Prescription != null && _context.Consultation != null && _context.Appointment != null)
             {
-                Prescription = await _context.Prescription.ToListAsync();
+                IList<Prescription> AllPrescriptions = await _context.Prescription.ToListAsync();
+                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
+                IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
+                IList<int> CurrentUserAppointments = new List<int>();
+                IList<int> CurrentUserConsultations = new List<int>();
+
+                if (!User.IsInRole("patient"))
+                {
+                    Prescription = AllPrescriptions;
+                }
+                else
+                {
+                    foreach (Appointment appointment in AllAppointments)
+                    {
+                        if (appointment.PatientId == UserId)
+                        {
+                            CurrentUserAppointments.Add(appointment.AppointmentId);
+                        }
+                    }
+
+                    foreach(Consultation consultation in AllConsultations)
+                    {
+                        if(CurrentUserAppointments.Contains(consultation.AppointmentId))
+                        {
+                            CurrentUserConsultations.Add(consultation.ConsultationId);
+                        }
+                    }
+
+                    Prescription = new List<Prescription>();
+                    foreach(Prescription prescription in AllPrescriptions)
+                    {
+                        if(CurrentUserConsultations.Contains(prescription.ConsultationId))
+                        {
+                            Prescription.Add(prescription);
+                        }
+                    }
+                }
+
             }
         }
     }

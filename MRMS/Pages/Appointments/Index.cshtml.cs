@@ -16,16 +16,21 @@ namespace MRMS.Pages.Appointments
     public class IndexModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public IndexModel(MRMS.Data.MRMSContext context)
+        public IndexModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Appointment> Appointment { get;set; } = default!;
+        public string UserId { get; set; }
+
 
         public async Task OnGetAsync()
         {
+            UserId = _userManager.GetUserId(User);
 
             if (_context.Appointment != null)
             {

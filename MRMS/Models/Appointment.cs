@@ -6,8 +6,8 @@ namespace MRMS.Models
     public class Appointment
     {
         public int AppointmentId { get; set; }
-        public int PreferredDoctorId { get; set; }
-        public int PatientId { get; set; }
+        public String PreferredDoctorId { get; set; }
+        public String PatientId { get; set; }
         public String Reason { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
