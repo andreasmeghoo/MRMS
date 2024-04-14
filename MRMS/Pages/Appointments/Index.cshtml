@@ -18,9 +18,9 @@
     {
             @if (item.PatientId == Model.UserId)
             {
-                <div class="card m-3" style="width: 18rem;">
+                <div class="card m-3 text-white bg-primary" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Appointment: @Html.DisplayFor(modelItem => item.Reason)</h5>
+                        <h5 class="card-title">Reason: @Html.DisplayFor(modelItem => item.Reason)</h5>
                         <p class="card-text">
                             <b>Preferred Doctor:</b> @Html.DisplayFor(modelItem => item.PreferredDoctorId)<br />
                             <b>Time:</b> @Html.DisplayFor(modelItem => item.StartTime)<br />
@@ -29,7 +29,7 @@
                                 <span><b>Accessibility Needs:</b> @Html.DisplayFor(modelItem => item.SpecialAccomodations)</span>
                             }
                         </p>
-                        <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a>
+                        <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a>
                     </div>
                 </div>
             }

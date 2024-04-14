@@ -6,7 +6,29 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
+@if(User.IsInRole("patient"))
+{
+    <div class="d-flex p-2 bd-highlight">
+        @foreach (var item in Model.Prescription)
+        {
+            // @if (item.PatientId == Model.UserId)
+            // {
+            <div class="card m-3 text-dark bg-warning" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Medication: @Html.DisplayFor(modelItem => item.Medication)</h5>
+                    <p class="card-text">
+                        <b>Dosage:</b> @Html.DisplayFor(modelItem => item.DoseAmount)<br />
+                        <b>Frequency:</b> @Html.DisplayFor(modelItem => item.DoseFrequency)<br />
+                        <b>Strength:</b> @Html.DisplayFor(modelItem => item.Strength)<br />
+                        <b>Date:</b> @Html.DisplayFor(modelItem => item.Date)<br />
+                    </p>
+                    <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
+                </div>
+            </div>
+            // }
+        }
+    </div>
+}else{
 <p>
     <a asp-page="Create">Prescribe Medication</a>
 </p>
@@ -82,3 +104,4 @@
 }
     </tbody>
 </table>
+}

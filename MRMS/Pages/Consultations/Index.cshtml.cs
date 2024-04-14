@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,21 @@ namespace MRMS.Pages.Consultations
     public class IndexModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public IndexModel(MRMS.Data.MRMSContext context)
+        public IndexModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Consultation> Consultation { get;set; } = default!;
+        public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
+            UserId = _userManager.GetUserId(User);
+
             if (_context.Consultation != null)
             {
                 Consultation = await _context.Consultation.ToListAsync();
