@@ -31,9 +31,46 @@ namespace MRMS.Pages.Prescriptions
         {
             UserId = _userManager.GetUserId(User);
 
-            if (_context.Prescription != null)
+            if (_context.Prescription != null && _context.Consultation != null && _context.Appointment != null)
             {
-                Prescription = await _context.Prescription.ToListAsync();
+                IList<Prescription> AllPrescriptions = await _context.Prescription.ToListAsync();
+                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
+                IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
+                IList<int> CurrentUserAppointments = new List<int>();
+                IList<int> CurrentUserConsultations = new List<int>();
+
+                if (!User.IsInRole("patient"))
+                {
+                    Prescription = AllPrescriptions;
+                }
+                else
+                {
+                    foreach (Appointment appointment in AllAppointments)
+                    {
+                        if (appointment.PatientId == UserId)
+                        {
+                            CurrentUserAppointments.Add(appointment.AppointmentId);
+                        }
+                    }
+
+                    foreach(Consultation consultation in AllConsultations)
+                    {
+                        if(CurrentUserAppointments.Contains(consultation.AppointmentId))
+                        {
+                            CurrentUserConsultations.Add(consultation.ConsultationId);
+                        }
+                    }
+
+                    Prescription = new List<Prescription>();
+                    foreach(Prescription prescription in AllPrescriptions)
+                    {
+                        if(CurrentUserConsultations.Contains(prescription.ConsultationId))
+                        {
+                            Prescription.Add(prescription);
+                        }
+                    }
+                }
+
             }
         }
     }

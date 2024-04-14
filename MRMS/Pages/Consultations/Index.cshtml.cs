@@ -41,20 +41,20 @@ namespace MRMS.Pages.Consultations
                 IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();
                 
-                foreach (Appointment appointment in AllAppointments)
-                {
-                    if(appointment.PatientId == UserId)
-                    {
-                        CurrentUserAppointments.Add(appointment.AppointmentId);
-                    }
-                }
-
                 if (!User.IsInRole("patient"))
                 {
                     Consultation = AllConsultations;
                 }
                 else
                 {
+                    foreach (Appointment appointment in AllAppointments)
+                    {
+                        if (appointment.PatientId == UserId)
+                        {
+                            CurrentUserAppointments.Add(appointment.AppointmentId);
+                        }
+                    }
+
                     Consultation = new List<Consultation>();
                     foreach (Consultation consultation in AllConsultations)
                     {

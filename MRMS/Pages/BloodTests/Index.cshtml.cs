@@ -31,9 +31,46 @@ namespace MRMS.Pages.BloodTests
         {
             UserId = _userManager.GetUserId(User);
 
-            if (_context.BloodTest != null)
+            if (_context.BloodTest != null && _context.Consultation != null && _context.Appointment != null)
             {
-                BloodTest = await _context.BloodTest.ToListAsync();
+                IList<BloodTest> AllBloodTests = await _context.BloodTest.ToListAsync();
+                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
+                IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
+                IList<int> CurrentUserAppointments = new List<int>();
+                IList<int> CurrentUserConsultations = new List<int>();
+
+                if (!User.IsInRole("patient"))
+                {
+                    BloodTest = AllBloodTests;
+                }
+                else
+                {
+                    foreach (Appointment appointment in AllAppointments)
+                    {
+                        if (appointment.PatientId == UserId)
+                        {
+                            CurrentUserAppointments.Add(appointment.AppointmentId);
+                        }
+                    }
+
+                    foreach (Consultation consultation in AllConsultations)
+                    {
+                        if (CurrentUserAppointments.Contains(consultation.AppointmentId))
+                        {
+                            CurrentUserConsultations.Add(consultation.ConsultationId);
+                        }
+                    }
+
+                    BloodTest = new List<BloodTest>();
+                    foreach (BloodTest bloodTest in AllBloodTests)
+                    {
+                        if (CurrentUserConsultations.Contains(bloodTest.ConsultationId))
+                        {
+                            BloodTest.Add(bloodTest);
+                        }
+                    }
+                }
+
             }
         }
     }

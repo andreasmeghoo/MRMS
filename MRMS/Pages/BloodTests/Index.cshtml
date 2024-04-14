@@ -11,19 +11,16 @@
     <div class="d-flex p-2 bd-highlight">
         @foreach (var item in Model.BloodTest)
         {
-            // @if (item.PatientId == Model.UserId)
-            // {
             <div class="card m-3 text-dark bg-info" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Comments: @Html.DisplayFor(modelItem => item.Comments)</h5>
                     <p class="card-text">
-                        <b>Performed By:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
-                        <b>Date:</b> @Html.DisplayFor(modelItem => item.PerformedById)<br />
+                        <b>Performed By:</b> @Html.DisplayFor(modelItem => item.PerformedById)<br />
+                        <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
                 </div>
             </div>
-            // }
         }
     </div>
 }else{
