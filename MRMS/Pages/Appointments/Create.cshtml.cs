@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Scripting;
 using MRMS.Data;
 using MRMS.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MRMS.Pages.Appointments
 {
@@ -15,20 +18,36 @@ namespace MRMS.Pages.Appointments
     public class CreateModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public CreateModel(MRMS.Data.MRMSContext context)
+        public CreateModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
+            _userManager = userManager;
         }
 
         [BindProperty]
         public Appointment Appointment { get; set; } = default!;
-        
+
+        public List<User> Doctors { get; set; }
+
+        public List<(TimeOnly StartTime, TimeOnly EndTime)> AvailableTimeSlots { get; set; }
+
+        public DateOnly Date { get; set; }
+
+        public TimeOnly Time { get; set; }
+
+        public IActionResult OnGet()
+        {
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            if (User.IsInRole("patient"))
+            {
+                Appointment = new Appointment();
+                Appointment.PatientId = _userManager.GetUserId(User);
+            }
+            Doctors = doctors;
+            return Page();
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -37,11 +56,53 @@ namespace MRMS.Pages.Appointments
             {
                 return Page();
             }
-
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
+
+        public IActionResult OnPostDoctorDateSelection(string doctorId)
+        {
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            if (User.IsInRole("patient"))
+            {
+                Appointment = new Appointment();
+                Appointment.PatientId = _userManager.GetUserId(User);
+                Appointment.PreferredDoctorId = doctorId;
+                ModelState.ClearValidationState("Appointment.Reason");
+
+                AvailableTimeSlots = GenerateTimeSlots();
+            }
+            Doctors = doctors;
+            return Page();
+        }
+
+        private List<(TimeOnly, TimeOnly)> GenerateTimeSlots()
+        {
+            List<(TimeOnly, TimeOnly)> timeSlots = new List<(TimeOnly, TimeOnly)>();
+
+            TimeOnly morningStart = new TimeOnly(8, 0);
+            TimeOnly morningEnd = new TimeOnly(13, 0);
+            TimeOnly afternoonStart = new TimeOnly(14, 0);
+            TimeOnly afternoonEnd = new TimeOnly(18, 0);
+
+            TimeOnly i = morningStart;
+            while (i < morningEnd)
+            {
+                timeSlots.Add((i, i.AddMinutes(15)));
+                i = i.AddMinutes(15);
+            }
+
+            i = afternoonStart;
+            while (i < afternoonEnd)
+            {
+                timeSlots.Add((i, i.AddMinutes(15)));
+                i = i.AddMinutes(15);
+            }
+
+            return timeSlots;
+        }
+
     }
 }
