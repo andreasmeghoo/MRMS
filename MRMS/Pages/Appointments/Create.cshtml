@@ -21,7 +21,7 @@
             <form method="post" asp-page-handler="DoctorDateSelection" id="selectDoctorDate">
                 <div class="form-group">
                     <label asp-for="Appointment.PreferredDoctorId" class="control-label">Preferred Doctor</label>
-                    <select asp-for="Appointment.PreferredDoctorId" class="form-control" onchange="submitForm()">
+                    <select asp-for="Appointment.PreferredDoctorId" class="form-control" id="preferredDoctorSelect" onchange="submitForm()">
                         <option value="">Select Doctor</option>
                         @foreach (var doctor in Model.Doctors)
                         {
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Date" class="control-label">Date</label>
-                    <input type="date" asp-for="Date" class="form-control" onchange="submitForm()" />
+                    <input type="date" asp-for="Date" class="form-control" id="dateInput" onchange="submitForm()" />
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
             </form>
@@ -120,6 +120,11 @@ else
 
 <script>
     function submitForm() {
-        document.getElementById("selectDoctorDate").submit();
+        var preferredDoctorSelect = document.getElementById('preferredDoctorSelect').value;
+        var dateInput = document.getElementById('dateInput').value;
+
+        if (preferredDoctorSelect !== "" && preferredDoctorSelect !== "Select Doctor" && dateInput !== "") {
+            document.getElementById("selectDoctorDate").submit();
+        }     
     }
 </script>
