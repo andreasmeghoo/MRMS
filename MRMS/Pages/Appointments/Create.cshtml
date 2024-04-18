@@ -35,9 +35,9 @@
                 </div>
             </form>
             <form method="post" asp-page-handler="OnPostAsync">
-                <input asp-for="Appointment.PatientId" />
-                <input asp-for="Appointment.PreferredDoctorId" />
-                <input asp-for="Date"/>
+                <input asp-for="Appointment.PatientId" type="hidden"/>
+                <input asp-for="Appointment.PreferredDoctorId" type="hidden"/>
+                <input asp-for="Date" type="hidden"/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 @if (Model.AvailableTimeSlots != null)
