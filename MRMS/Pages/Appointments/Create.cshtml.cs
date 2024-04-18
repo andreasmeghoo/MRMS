@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -50,19 +51,24 @@ namespace MRMS.Pages.Appointments
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string time, string date)
         {
           if (!ModelState.IsValid || _context.Appointment == null || Appointment == null)
             {
                 return Page();
             }
+            Time = TimeOnly.TryParse(time, out TimeOnly parsedTime) ? parsedTime : default;
+            Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
+            DateTime startTime = Date.ToDateTime(Time);
+            Appointment.StartTime = startTime;
+            Appointment.EndTime = startTime.AddMinutes(15);
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        public IActionResult OnPostDoctorDateSelection(string doctorId)
+        public IActionResult OnPostDoctorDateSelection(string doctorId, string date)
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             if (User.IsInRole("patient"))
@@ -70,6 +76,7 @@ namespace MRMS.Pages.Appointments
                 Appointment = new Appointment();
                 Appointment.PatientId = _userManager.GetUserId(User);
                 Appointment.PreferredDoctorId = doctorId;
+                Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
                 ModelState.ClearValidationState("Appointment.Reason");
 
                 AvailableTimeSlots = GenerateTimeSlots();

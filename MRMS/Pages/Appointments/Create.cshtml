@@ -32,12 +32,12 @@
                 <div class="form-group">
                     <label asp-for="Date" class="control-label">Date</label>
                     <input type="date" asp-for="Date" class="form-control" id="dateInput" onchange="submitForm()" />
-                    <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
             </form>
-            <form method="post">
+            <form method="post" asp-page-handler="OnPostAsync">
                 <input asp-for="Appointment.PatientId" />
                 <input asp-for="Appointment.PreferredDoctorId" />
+                <input asp-for="Date"/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 @if (Model.AvailableTimeSlots != null)
