@@ -24,7 +24,7 @@
             {
                 <div class="card m-3 text-white bg-primary" style="width: 20rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Reason: @Html.DisplayFor(modelItem => item.Reason)</h5>
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Reason)</h5>
                         <p class="card-text">
                             @{
                                 User preferredDoctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);

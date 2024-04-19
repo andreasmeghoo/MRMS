@@ -13,11 +13,11 @@
         {
             <div class="card m-3 text-dark bg-warning" style="width: 20rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Medication: @Html.DisplayFor(modelItem => item.Medication)</h5>
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Medication)</h5>
                     <p class="card-text">
-                        <b>Dosage:</b> @Html.DisplayFor(modelItem => item.DoseAmount)<br />
+                        <b>Dosage:</b> @Html.DisplayFor(modelItem => item.DoseQuantity)<br />
                         <b>Frequency:</b> @Html.DisplayFor(modelItem => item.DoseFrequency)<br />
-                        <b>Strength:</b> @Html.DisplayFor(modelItem => item.Strength)<br />
+                        <b>Strength:</b> @Html.DisplayFor(modelItem => item.DoseStrength)<br />
                         <b>Date:</b> @Html.DisplayFor(modelItem => item.Date)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
@@ -42,13 +42,13 @@
                 @Html.DisplayNameFor(model => model.Prescription[0].Medication)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Prescription[0].DoseAmount)
+                @Html.DisplayNameFor(model => model.Prescription[0].DoseQuantity)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Prescription[0].DoseFrequency)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Prescription[0].Strength)
+                @Html.DisplayNameFor(model => model.Prescription[0].DoseStrength)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Prescription[0].TotalQuantity)
@@ -75,13 +75,13 @@
                 @Html.DisplayFor(modelItem => item.Medication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DoseAmount)
+                @Html.DisplayFor(modelItem => item.DoseQuantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DoseFrequency)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Strength)
+                @Html.DisplayFor(modelItem => item.DoseStrength)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalQuantity)

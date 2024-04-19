@@ -13,7 +13,7 @@
         {
             <div class="card m-3 text-dark bg-info" style="width: 20rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Comments: @Html.DisplayFor(modelItem => item.Comments)</h5>
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Comments)</h5>
                     <p class="card-text">
                         <b>Performed By:</b> @Html.DisplayFor(modelItem => item.PerformedById)<br />
                         <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />

@@ -18,7 +18,7 @@ else
         {
             <div class="card m-3 text-white bg-secondary" style="width: 20rem;">
                     <div class="card-body">
-                        <h5 class="card-title">History: @Html.DisplayFor(modelItem => item.PatientHistory)</h5>
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.PatientHistory)</h5>
                         <p class="card-text">
                         @{
                             User nurse = Model.Nurses.FirstOrDefault(d => d.Id == item.NurseId);
