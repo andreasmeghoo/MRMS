@@ -16,7 +16,7 @@ namespace MRMS.Models
 
         public String CarePlan { get; set; }
 
-        public String Comments { get; set; }
+        public String? Comments { get; set; }
 
         public String Diagnosis { get; set; }
 
