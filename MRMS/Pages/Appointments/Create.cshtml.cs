@@ -42,44 +42,52 @@ namespace MRMS.Pages.Appointments
         public IActionResult OnGet()
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Doctors = doctors;
             if (User.IsInRole("patient"))
             {
                 Appointment = new Appointment();
                 Appointment.PatientId = _userManager.GetUserId(User);
-            }
-            Doctors = doctors;
+            }         
             return Page();
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(string time, string date)
         {
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Doctors = doctors;
             if (!ModelState.IsValid || _context.Appointment == null || Appointment == null)
             {
                 return Page();
+            }
+            if (User.IsInRole("patient"))
+            {
+                Appointment.PatientId = _userManager.GetUserId(User);
             }
             Time = TimeOnly.TryParse(time, out TimeOnly parsedTime) ? parsedTime : default;
             Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
             DateTime startTime = Date.ToDateTime(Time);
             Appointment.StartTime = startTime;
             Appointment.EndTime = startTime.AddMinutes(15);
+            Appointment.Confirmed = true;
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
-
+           
             return RedirectToPage("./Index");
         }
 
         public IActionResult OnPostDoctorDateSelection(string doctorId, string date)
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Doctors = doctors;
             if (User.IsInRole("patient"))
             {
+                Appointment.PatientId = _userManager.GetUserId(User);
                 Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
                 ModelState.ClearValidationState("Appointment.Reason");
 
                 AvailableTimeSlots = GenerateTimeSlots(doctorId, Date);
-            }
-            Doctors = doctors;
+            }         
             return Page();
         }
 
