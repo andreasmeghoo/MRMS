@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,26 @@ namespace MRMS.Pages.Consultations
     public class DetailsModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public DetailsModel(MRMS.Data.MRMSContext context)
+        public DetailsModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-      public Consultation Consultation { get; set; } = default!; 
+        public Consultation Consultation { get; set; } = default!;
+
+        public List<User> Doctors { get; set; }
+
+        public List<User> Nurses { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+
             if (id == null || _context.Consultation == null)
             {
                 return NotFound();
@@ -35,7 +46,7 @@ namespace MRMS.Pages.Consultations
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Consultation = consultation;
             }

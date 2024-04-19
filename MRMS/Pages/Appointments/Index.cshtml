@@ -22,18 +22,27 @@
         {
             @if (item.PatientId == Model.UserId)
             {
-                <div class="card m-3 text-white bg-primary" style="width: 18rem;">
+                <div class="card m-3 text-white bg-primary" style="width: 20rem;">
                     <div class="card-body">
                         <h5 class="card-title">Reason: @Html.DisplayFor(modelItem => item.Reason)</h5>
                         <p class="card-text">
-                            <b>Preferred Doctor:</b> @Html.DisplayFor(modelItem => item.PreferredDoctorId)<br />
-                            <b>Time:</b> @Html.DisplayFor(modelItem => item.StartTime)<br />
+                            @{
+                                User preferredDoctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);
+                            <span><b>Preferred Doctor:</b> @preferredDoctor.FirstName @preferredDoctor.LastName</span><br />
+                            }
+                            <b>Start Time:</b> @Html.DisplayFor(modelItem => item.StartTime)<br />
+                            <b>End Time:</b> @Html.DisplayFor(modelItem => item.EndTime)<br />
                             @if (item.SpecialAccomodations != null)
                             {
-                                <span><b>Accessibility Needs:</b> @Html.DisplayFor(modelItem => item.SpecialAccomodations)</span>
+                                <span><b>Special Accomodations:</b> @Html.DisplayFor(modelItem => item.SpecialAccomodations)</span>
                             }
                         </p>
-                        <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a>
+                    </div>
+                    <div class="card-footer bg-success">
+                        @if(item.Confirmed)
+                        {
+                            <p>Appointment Confirmed</p>
+                        }
                     </div>
                 </div>
             }

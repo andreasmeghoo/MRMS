@@ -27,15 +27,18 @@ namespace MRMS.Pages.Appointments
         public IList<Appointment> Appointment { get;set; } = default!;
         public string UserId { get; set; }
 
+        public List<User> Doctors { get; set; }
+
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
-
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             if (_context.Appointment != null)
             {
                 Appointment = await _context.Appointment.ToListAsync();
             }
+            Doctors = doctors;
         }
 
         public void OnPostUpdateStatus(int id, Enums.AppointmentStatus newStatus)
