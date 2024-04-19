@@ -47,7 +47,7 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Consultation.CarePlan)
             </dd>
-            @if (Model.Consultation.Comments != null)
+            @if (Model.Consultation.Comments != null && Model.Consultation.Comments != "")
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Consultation.Comments)

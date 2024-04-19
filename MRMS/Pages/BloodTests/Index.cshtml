@@ -1,7 +1,12 @@
 ﻿@page
+@using MRMS.Models;
 @model MRMS.Pages.BloodTests.IndexModel
 
-@{
+@if(User.IsInRole("patient")){
+    ViewData["Title"] = "Past Blood Tests";
+}
+else
+{
     ViewData["Title"] = "Blood Tests";
 }
 
@@ -15,7 +20,11 @@
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Comments)</h5>
                     <p class="card-text">
-                        <b>Performed By:</b> @Html.DisplayFor(modelItem => item.PerformedById)<br />
+                        @{
+                            User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
+                            <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
+                            <br />
+                        }                    
                         <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
