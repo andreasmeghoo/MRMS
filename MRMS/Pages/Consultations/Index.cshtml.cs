@@ -41,11 +41,25 @@ namespace MRMS.Pages.Consultations
                 IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();
                 
-                if (!User.IsInRole("patient"))
+                if (User.IsInRole("doctor"))
                 {
-                    Consultation = AllConsultations;
+                    foreach (Appointment appointment in AllAppointments)
+                    {
+                        if (appointment.PreferredDoctorId == UserId)
+                        {
+                            CurrentUserAppointments.Add(appointment.AppointmentId);
+                        }
+                    }
+                    Consultation = new List<Consultation>();
+                    foreach (Consultation consultation in AllConsultations)
+                    {
+                        if (CurrentUserAppointments.Contains(consultation.AppointmentId))
+                        {
+                            Consultation.Add(consultation);
+                        }
+                    }
                 }
-                else
+                else if (User.IsInRole("doctor"))
                 {
                     foreach (Appointment appointment in AllAppointments)
                     {
@@ -63,6 +77,10 @@ namespace MRMS.Pages.Consultations
                             Consultation.Add(consultation);
                         }
                     }
+                }
+                else
+                {
+                    Consultation = AllConsultations;
                 }
 
             }
