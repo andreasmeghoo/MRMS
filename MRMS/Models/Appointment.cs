@@ -6,7 +6,7 @@ namespace MRMS.Models
     public class Appointment
     {
         public int AppointmentId { get; set; }
-        [Display(Name = "Preffered Doctor")]
+        [Display(Name = "Preferred Doctor")]
         public String PreferredDoctorId { get; set; }
         [Display(Name = "Patient")]
         public String PatientId { get; set; }
