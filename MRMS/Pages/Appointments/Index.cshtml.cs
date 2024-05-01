@@ -29,16 +29,18 @@ namespace MRMS.Pages.Appointments
 
         public List<User> Doctors { get; set; }
 
+        public List<User> Patients { get; set; }
+
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
-            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             if (_context.Appointment != null)
             {
                 Appointment = await _context.Appointment.ToListAsync();
             }
-            Doctors = doctors;
         }
 
         public void OnPostUpdateStatus(int id, Enums.AppointmentStatus newStatus)

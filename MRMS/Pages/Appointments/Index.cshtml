@@ -49,6 +49,114 @@
         }
     </div>
 }
+else if(User.IsInRole("doctor"))
+{
+    <p>
+        <a asp-page="Create">New Appointment</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].PreferredDoctorId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].PatientId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].Reason)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].SpecialAccomodations)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Appointment)
+            {
+                if(item.PreferredDoctorId == Model.UserId)
+                {
+                <tr>
+                        @{
+                            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);
+                            <td>
+                                @doctor.FirstName @doctor.LastName
+                            </td>
+                            User patient = Model.Patients.FirstOrDefault(p => p.Id == item.PatientId);
+                            <td>
+                                @patient.FirstName @patient.LastName
+                            </td>
+                        }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SpecialAccomodations)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a> <br>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @{
+                                    var currentStatusName = ((DisplayStatusAttribute)typeof(AppointmentStatus)
+                                    .GetMember(item.Status.ToString())[0]
+                                    .GetCustomAttributes(typeof(DisplayStatusAttribute), false)[0])
+                                    .Name;
+                                }
+                                @currentStatusName
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach (var appointmentStatus in AppointmentStatus.GetValues(typeof(AppointmentStatus)))
+                                {
+                                    var optionName = ((DisplayActionAttribute)typeof(AppointmentStatus)
+                                    .GetMember(appointmentStatus.ToString())[0]
+                                    .GetCustomAttributes(typeof(DisplayActionAttribute), false)[0])
+                                    .Name;
+
+                                    var user = await _userManager.GetUserAsync(User);
+                                    var roles = await _userManager.GetRolesAsync(user);
+                                    var roleAccessAttributes = (RoleAccessAttribute[])typeof(AppointmentStatus)
+                                    .GetMember(appointmentStatus.ToString())[0]
+                                    .GetCustomAttributes(typeof(RoleAccessAttribute), false);
+
+                                    foreach (var roleAccessAttribute in roleAccessAttributes)
+                                    {
+                                        if (roles.Contains(roleAccessAttribute.Role))
+                                        {
+                                            <li>
+                                                <form asp-page-handler="updateStatus" method="post">
+                                                    <input type="hidden" name="id" value="@item.AppointmentId" />
+                                                    <input type="hidden" name="newStatus" value="@appointmentStatus" />
+                                                    <button type="submit" class="dropdown-item">@optionName</button>
+                                                </form>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+}
 else
 {
     <p>
