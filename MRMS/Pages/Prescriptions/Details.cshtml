@@ -7,8 +7,6 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if(User.IsInRole("patient"))
-{
     <div>
         <hr />
         <dl class="row">
@@ -63,72 +61,5 @@
         </dl>
     </div>
     <div>
-        <a asp-page="./Index">Back to Prescriptions</a>
+    <a asp-page="./Index">Back to Prescriptions</a>
     </div>
-}
-else
-{
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.ConsultationId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.ConsultationId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.Date)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.Date)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.Medication)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.Medication)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.DoseQuantity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.DoseQuantity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.DoseFrequency)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.DoseFrequency)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.DoseStrength)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.DoseStrength)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.TotalQuantity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.TotalQuantity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.Refills)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.Refills)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.Duration)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.Duration)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Prescription?.PrescriptionId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
-}
