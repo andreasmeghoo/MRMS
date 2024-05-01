@@ -44,13 +44,10 @@ else
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Consultation[0].AppointmentId)
+                    Doctor
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Consultation[0].DoctorId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Consultation[0].NurseId)
+                    Nurse
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Consultation[0].PatientHistory)
@@ -74,9 +71,6 @@ else
             @foreach (var item in Model.Consultation)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AppointmentId)
-                    </td>
                     @{
                         User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.DoctorId);
                         <td>
