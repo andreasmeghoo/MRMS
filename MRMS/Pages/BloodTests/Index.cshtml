@@ -40,12 +40,6 @@ else
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BloodTest[0].BloodTestId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BloodTest[0].ConsultationId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.BloodTest[0].Comments)
             </th>
             <th>
@@ -60,12 +54,6 @@ else
     <tbody>
 @foreach (var item in Model.BloodTest) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BloodTestId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConsultationId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>

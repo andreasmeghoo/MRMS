@@ -33,9 +33,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Prescription[0].ConsultationId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Prescription[0].Date)
             </th>
             <th>
@@ -66,31 +63,28 @@
 @foreach (var item in Model.Prescription) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ConsultationId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Medication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DoseQuantity)
+                @Html.DisplayFor(modelItem => item.DoseQuantity) @Html.DisplayFor(modelItem=> item.DoseQuantityUnits)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DoseFrequency)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DoseStrength)
+                @Html.DisplayFor(modelItem => item.DoseStrength) @Html.DisplayFor(modelItem=> item.DoseStrengthUnits)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalQuantity)
+                @Html.DisplayFor(modelItem => item.TotalQuantity) @Html.DisplayFor(modelItem=> item.DoseQuantityUnits)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Refills)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.Duration) days
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.PrescriptionId">Edit</a> |

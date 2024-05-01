@@ -1,4 +1,6 @@
-﻿namespace MRMS.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MRMS.Models
 {
     public class BloodTest
     {
@@ -6,9 +8,9 @@
         public int ConsultationId { get; set; }
 
         public string Comments { get; set; }
-
+        [Display(Name = "Date Performed")]
         public DateTime PerformedDate { get; set; }
-
+        [Display(Name = "Performed By")]
         public String PerformedById { get; set; }
 
     }
