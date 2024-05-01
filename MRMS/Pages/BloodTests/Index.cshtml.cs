@@ -25,11 +25,16 @@ namespace MRMS.Pages.BloodTests
         }
 
         public IList<BloodTest> BloodTest { get;set; } = default!;
+        public List<User> Staff { get;set; } = new List<User>();
         public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            var nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+            Staff.AddRange(doctors);
+            Staff.AddRange(nurses);
 
             if (_context.BloodTest != null && _context.Consultation != null && _context.Appointment != null)
             {

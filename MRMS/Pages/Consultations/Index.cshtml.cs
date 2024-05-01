@@ -28,12 +28,17 @@ namespace MRMS.Pages.Consultations
         }
 
         public IList<Consultation> Consultation { get;set; } = default!;
+
+        public List<User> Doctors { get; set; }
+
+        public List<User> Nurses { get; set; }
         public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
-            
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
 
             if (_context.Consultation != null && _context.Appointment != null)
             {

@@ -9,7 +9,7 @@
 
         public DateTime PerformedDate { get; set; }
 
-        public int PerformedById { get; set; }
+        public String PerformedById { get; set; }
 
     }
 }
