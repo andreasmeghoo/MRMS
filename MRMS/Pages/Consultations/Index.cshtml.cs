@@ -64,7 +64,7 @@ namespace MRMS.Pages.Consultations
                         }
                     }
                 }
-                else if (User.IsInRole("doctor"))
+                else if (User.IsInRole("patient"))
                 {
                     foreach (Appointment appointment in AllAppointments)
                     {
