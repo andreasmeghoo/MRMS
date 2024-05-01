@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240419140034_MakeConsultationCommentsNullable")]
+    partial class MakeConsultationCommentsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +80,8 @@ namespace MRMS.Migrations
                     b.Property<int>("ConsultationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PerformedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PerformedById")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PerformedDate")
                         .HasColumnType("datetime2");
@@ -100,26 +102,26 @@ namespace MRMS.Migrations
                     b.Property<int>("BloodTestId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("cholestorolLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("cholestorolLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("glucoseLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("glucoseLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("kidneyFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("kidneyFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("liverFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("liverFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("plateletCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("plateletCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("redBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("redBloodCellCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("whiteBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("whiteBloodCellCount")
+                        .HasColumnType("int");
 
                     b.HasKey("BloodTestResultId");
 
@@ -183,21 +185,12 @@ namespace MRMS.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DoseAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("DoseFrequency")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DoseQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoseQuantityUnits")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoseStrength")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoseStrengthUnits")
-                        .HasColumnType("int");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -207,6 +200,9 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Refills")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Strength")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalQuantity")
@@ -326,31 +322,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bade06ae-b2f2-4bd6-a05d-e6f320fc3a1e",
+                            Id = "e736ac9c-bc7b-4216-b5fc-256d6a172898",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6c5c46ba-3280-42b3-85c9-64e03bcb8837",
+                            Id = "0fb4fadc-f6a0-4bd1-87a2-044f9d6155e9",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "8e23a881-1e7b-4f35-b3a5-211025f260ba",
+                            Id = "ba49ff5c-5c72-4227-a51c-4ca357c76a64",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "ccad5058-a637-49de-b58d-b2a84668dff3",
+                            Id = "9adf4b8d-a0d3-46cf-bc30-9797736421d8",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "f707ef7b-b976-405c-ae92-f65553fc9875",
+                            Id = "3119b0d0-e515-41a9-bffa-50a0fd9864ff",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });

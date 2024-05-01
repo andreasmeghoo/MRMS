@@ -16,5 +16,7 @@ namespace MRMS.Models
 
         public AppointmentStatus Status { get; set; }
 
+        public bool Confirmed { get; set; }
+
     }
 }

@@ -1,7 +1,12 @@
 ﻿@page
+@using MRMS.Models;
 @model MRMS.Pages.Consultations.IndexModel
 
-@{
+@if(User.IsInRole("patient")){
+    ViewData["Title"] = "Past Consultations";
+}
+else
+{
     ViewData["Title"] = "Consultations";
 }
 
@@ -11,12 +16,17 @@
     <div class="d-flex p-2 bd-highlight">
         @foreach (var item in Model.Consultation)
         {
-            <div class="card m-3 text-white bg-secondary" style="width: 18rem;">
+            <div class="card m-3 text-white bg-secondary" style="width: 20rem;">
                     <div class="card-body">
-                        <h5 class="card-title">History: @Html.DisplayFor(modelItem => item.PatientHistory)</h5>
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.PatientHistory)</h5>
                         <p class="card-text">
-                            <b>Nurse:</b> @Html.DisplayFor(modelItem => item.NurseId)<br />
-                            <b>Doctor:</b> @Html.DisplayFor(modelItem => item.DoctorId)<br />
+                        @{
+                            User nurse = Model.Nurses.FirstOrDefault(d => d.Id == item.NurseId);
+                            <span><b>Nurse:</b> @nurse.FirstName @nurse.LastName</span>
+                            <br />
+                            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.DoctorId);
+                            <span><b>Doctor:</b> @doctor.FirstName @doctor.LastName</span>
+                        }
                         </p>
                         <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.ConsultationId">Details</a>
                     </div>

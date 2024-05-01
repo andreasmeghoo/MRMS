@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240419192108_ToStringBloodTestPerformedById")]
+    partial class ToStringBloodTestPerformedById
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,26 +103,26 @@ namespace MRMS.Migrations
                     b.Property<int>("BloodTestId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("cholestorolLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("cholestorolLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("glucoseLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("glucoseLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("kidneyFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("kidneyFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("liverFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("liverFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("plateletCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("plateletCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("redBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("redBloodCellCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("whiteBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("whiteBloodCellCount")
+                        .HasColumnType("int");
 
                     b.HasKey("BloodTestResultId");
 
@@ -326,31 +329,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bade06ae-b2f2-4bd6-a05d-e6f320fc3a1e",
+                            Id = "93991e26-7c83-43de-8747-a3952f0ac83b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6c5c46ba-3280-42b3-85c9-64e03bcb8837",
+                            Id = "d99f37c8-227c-434c-99ac-ca403df58631",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "8e23a881-1e7b-4f35-b3a5-211025f260ba",
+                            Id = "5f73480e-02d7-496c-9aaf-00ceda43e617",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "ccad5058-a637-49de-b58d-b2a84668dff3",
+                            Id = "9e03350f-7626-4f80-b27c-d9eb1ee9cf76",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "f707ef7b-b976-405c-ae92-f65553fc9875",
+                            Id = "da7fcee7-6ad3-447a-aa87-e7f462f50d44",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });

@@ -1,15 +1,26 @@
-﻿namespace MRMS.Models
+﻿using MRMS.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace MRMS.Models
 {
     public class Prescription
     {
         public int PrescriptionId { get; set; }
         public int ConsultationId { get; set; }
+        [Display(Name = "Date Prescribed")]
         public DateTime Date { get; set; }
         public string Medication { get; set; }
-        public int DoseAmount { get; set; }
-        public string DoseFrequency { get; set; }
-        public int Strength { get; set; }
+        [Display(Name="Dose Quantity")]
+        public int DoseQuantity { get; set; }
 
+        public DoseQuantityUnits DoseQuantityUnits { get; set; }
+        [Display(Name = "Frequency")]
+        public string DoseFrequency { get; set; }
+        [Display(Name = "Strength")]
+        public int DoseStrength { get; set; }
+
+        public DoseStrengthUnits DoseStrengthUnits { get; set; }
+        [Display(Name = "Total Quantity")]
         public int TotalQuantity { get; set; }
         public int Refills { get; set; }
 

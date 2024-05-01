@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography.Pkcs;
+﻿using MRMS.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.Pkcs;
 
 namespace MRMS.Models
 {
@@ -6,14 +8,20 @@ namespace MRMS.Models
     {
         public int BloodTestResultId { get; set; }
         public int BloodTestId { get; set; }
-        public int redBloodCellCount { get; set; }
-        public int whiteBloodCellCount { get; set; }
-
-        public int plateletCount { get; set; }
-        public int glucoseLevel { get; set; }
-        public int cholestorolLevel { get; set; }
-        public int liverFunction {  get; set; }
-        public int kidneyFunction { get; set; }
+        [Display(Name="Red Blood Cell Count")]
+        public decimal redBloodCellCount { get; set; }
+        [Display(Name = "White Blood Cell Count")]
+        public decimal whiteBloodCellCount { get; set; }
+        [Display(Name = "Platelet Count")]
+        public decimal plateletCount { get; set; }
+        [Display(Name = "Glucose Level")]
+        public decimal glucoseLevel { get; set; }
+        [Display(Name = "Cholesterol Level")]
+        public decimal cholestorolLevel { get; set; }
+        [Display(Name = "Liver Function")]
+        public decimal liverFunction {  get; set; }
+        [Display(Name = "Kidney Function")]
+        public decimal kidneyFunction { get; set; }
 
        
     }

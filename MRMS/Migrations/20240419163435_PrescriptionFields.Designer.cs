@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240419163435_PrescriptionFields")]
+    partial class PrescriptionFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +80,8 @@ namespace MRMS.Migrations
                     b.Property<int>("ConsultationId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PerformedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PerformedById")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PerformedDate")
                         .HasColumnType("datetime2");
@@ -100,26 +102,26 @@ namespace MRMS.Migrations
                     b.Property<int>("BloodTestId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("cholestorolLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("cholestorolLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("glucoseLevel")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("glucoseLevel")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("kidneyFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("kidneyFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("liverFunction")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("liverFunction")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("plateletCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("plateletCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("redBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("redBloodCellCount")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("whiteBloodCellCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("whiteBloodCellCount")
+                        .HasColumnType("int");
 
                     b.HasKey("BloodTestResultId");
 
@@ -326,31 +328,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bade06ae-b2f2-4bd6-a05d-e6f320fc3a1e",
+                            Id = "9c0ffa4e-6192-46b9-9e5b-9bea091979ae",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6c5c46ba-3280-42b3-85c9-64e03bcb8837",
+                            Id = "82be24a6-25b2-430b-a2b7-7ad979eaf1cb",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "8e23a881-1e7b-4f35-b3a5-211025f260ba",
+                            Id = "3c8d3256-8525-4365-af0c-0b3b8df65299",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "ccad5058-a637-49de-b58d-b2a84668dff3",
+                            Id = "7cb87431-f3be-41bc-ac88-457832a4dfcc",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "f707ef7b-b976-405c-ae92-f65553fc9875",
+                            Id = "9dde0e27-06a0-4efa-a593-7cb494bee857",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });
