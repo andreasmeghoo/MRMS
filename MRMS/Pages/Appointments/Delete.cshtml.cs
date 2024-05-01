@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,17 +16,26 @@ namespace MRMS.Pages.Appointments
     public class DeleteModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public DeleteModel(MRMS.Data.MRMSContext context)
+        public DeleteModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
-      public Appointment Appointment { get; set; } = default!;
+        public Appointment Appointment { get; set; } = default!;
+        public List<User> Doctors { get; set; }
+
+        public List<User> Patients { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+
             if (id == null || _context.Appointment == null)
             {
                 return NotFound();

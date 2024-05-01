@@ -2,7 +2,8 @@
 @using MRMS.Models;
 @model MRMS.Pages.BloodTests.IndexModel
 
-@if(User.IsInRole("patient")){
+@if (User.IsInRole("patient"))
+{
     ViewData["Title"] = "Past Blood Tests";
 }
 else
@@ -11,7 +12,7 @@ else
 }
 
 <h1>@ViewData["Title"]</h1>
-@if(User.IsInRole("patient"))
+@if (User.IsInRole("patient"))
 {
     <div class="d-flex p-2 bd-highlight">
         @foreach (var item in Model.BloodTest)
@@ -24,7 +25,7 @@ else
                             User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
                             <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
                             <br />
-                        }                    
+                        }
                         <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
@@ -32,44 +33,50 @@ else
             </div>
         }
     </div>
-}else{
-<p>
-    <a asp-page="Create">Order Blood Test</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BloodTest[0].Comments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BloodTest[0].PerformedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BloodTest[0].PerformedById)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.BloodTest) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerformedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerformedById)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.BloodTestId">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.BloodTestId">Delete</a> |
-                <a asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
-            </td>
-        </tr>
 }
-    </tbody>
-</table>
+else
+{
+    <p>
+        <a asp-page="Create">Order Blood Test</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BloodTest[0].Comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BloodTest[0].PerformedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BloodTest[0].PerformedById)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BloodTest)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PerformedDate)
+                    </td>
+                    @{
+                        User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
+                        <td>
+                            @bloodTestStaff.FirstName @bloodTestStaff.LastName
+                        </td>
+                    }
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.BloodTestId">Edit</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.BloodTestId">Delete</a> |
+                        <a asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

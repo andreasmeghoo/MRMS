@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,17 +17,25 @@ namespace MRMS.Pages.BloodTests
     public class DeleteModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public DeleteModel(MRMS.Data.MRMSContext context)
+        public DeleteModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
-      public BloodTest BloodTest { get; set; } = default!;
+        public BloodTest BloodTest { get; set; } = default!;
+       
+        public List<User> Staff { get; set; } = new List<User>();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            var nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+            Staff.AddRange(doctors);
+            Staff.AddRange(nurses);
             if (id == null || _context.BloodTest == null)
             {
                 return NotFound();

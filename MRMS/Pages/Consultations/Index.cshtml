@@ -44,10 +44,10 @@ else
         <thead>
             <tr>
                 <th>
-                    Doctor
+                    @Html.DisplayNameFor(model => model.Consultation[0].DoctorId)
                 </th>
                 <th>
-                    Nurse
+                    @Html.DisplayNameFor(model => model.Consultation[0].NurseId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Consultation[0].PatientHistory)
