@@ -1,4 +1,7 @@
 ﻿@page
+@using MRMS.Enums;
+@using MRMS.Models;
+@using System.ComponentModel.DataAnnotations;
 @model MRMS.Pages.Prescriptions.CreateModel
 
 @{
@@ -13,13 +16,22 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Prescription.ConsultationId" class="control-label"></label>
-                <input asp-for="Prescription.ConsultationId" class="form-control" />
+                <label asp-for="Prescription.ConsultationId" class="control-label">Consultation</label>
+                <select asp-for="Prescription.ConsultationId" class="form-control">
+                    <option value="">Select Consultation</option>
+                    @foreach (var consultation in Model.Consultations)
+                    {
+                        Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
+                        User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                        User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                        <option value="@consultation.ConsultationId">Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @appointment.Reason</option>
+                    }
+                </select>
                 <span asp-validation-for="Prescription.ConsultationId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Prescription.Date" class="control-label"></label>
-                <input asp-for="Prescription.Date" class="form-control" />
+                <input asp-for="Prescription.Date" class="form-control" id="dateInput" readonly />
                 <span asp-validation-for="Prescription.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,6 +45,19 @@
                 <span asp-validation-for="Prescription.DoseQuantity" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <select asp-for="Prescription.DoseQuantityUnits" class="form-control-sm">
+                    @foreach (var enumValue in Enum.GetValues(typeof(DoseQuantityUnits)))
+                    {
+                        var enumName = Enum.GetName(typeof(DoseQuantityUnits), enumValue);
+                        var displayAttribute = typeof(DoseQuantityUnits).GetField(enumName).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                        var displayName = displayAttribute != null ? displayAttribute.Name : enumName;
+
+                        <option value="@enumValue">@displayName</option>
+                    }
+                </select>
+                <span asp-validation-for="Prescription.DoseQuantityUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Prescription.DoseFrequency" class="control-label"></label>
                 <input asp-for="Prescription.DoseFrequency" class="form-control" />
                 <span asp-validation-for="Prescription.DoseFrequency" class="text-danger"></span>
@@ -43,9 +68,35 @@
                 <span asp-validation-for="Prescription.DoseStrength" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <select asp-for="Prescription.DoseStrengthUnits" class="form-control-sm">
+                    @foreach (var enumValue in Enum.GetValues(typeof(DoseStrengthUnits)))
+                    {
+                        var enumName = Enum.GetName(typeof(DoseStrengthUnits), enumValue);
+                        var displayAttribute = typeof(DoseStrengthUnits).GetField(enumName).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                        var displayName = displayAttribute != null ? displayAttribute.Name : enumName;
+
+                        <option value="@enumValue">@displayName</option>
+                    }
+                </select>
+                <span asp-validation-for="Prescription.DoseStrengthUnits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Prescription.TotalQuantity" class="control-label"></label>
                 <input asp-for="Prescription.TotalQuantity" class="form-control" />
                 <span asp-validation-for="Prescription.TotalQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Prescription.DoseQuantityUnits" class="form-control-sm">
+                    @foreach (var enumValue in Enum.GetValues(typeof(DoseQuantityUnits)))
+                    {
+                        var enumName = Enum.GetName(typeof(DoseQuantityUnits), enumValue);
+                        var displayAttribute = typeof(DoseQuantityUnits).GetField(enumName).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+                        var displayName = displayAttribute != null ? displayAttribute.Name : enumName;
+
+                        <option value="@enumValue">@displayName</option>
+                    }
+                </select>
+                <span asp-validation-for="Prescription.DoseQuantityUnits" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Prescription.Refills" class="control-label"></label>
@@ -67,7 +118,27 @@
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function getCurrentDateTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = ('0' + (now.getMonth() + 1)).slice(-2);
+        var day = ('0' + now.getDate()).slice(-2);
+        var hours = ('0' + now.getHours()).slice(-2);
+        var minutes = ('0' + now.getMinutes()).slice(-2);
+        return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    $("#dateInput").on("keydown", function (e) {
+        var blockedKeys = [191, 40, 38, 39, 37, 186, 32];
+
+        if (blockedKeys.includes(e.keyCode)) {
+            e.preventDefault();
+        }
+    });
+
+    $(document).ready(function () {
+        $("#dateInput").val(getCurrentDateTime());
+    });
+</script>

@@ -14,8 +14,6 @@
 
 <h1>@ViewData["Title"]</h1>
 <hr />
-@if (User.IsInRole("patient"))
-{
     <div class="row">
         <div class="col-md-4">
             <form method="post" asp-page-handler="DoctorDateSelection" id="selectDoctorDate">
@@ -36,7 +34,20 @@
                 </div>
             </form>
             <form method="post" asp-page-handler="OnPostAsync">
-                <input asp-for="Appointment.PatientId" type="hidden"/>
+                <input id="patientIdInput" name="patientId" type="hidden"/>
+                @if(!User.IsInRole("patient") && Model.Patients != null)
+                {
+                <div class="form-group">
+                    <label  class="control-label">Patient</label>
+                    <select class="form-control" id="patientSelect" onchange="setPatientId()">
+                        <option value="">Select Patient</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id">@patient.FirstName @patient.LastName</option>
+                        }
+                    </select>
+                </div>
+                }         
                 <input asp-for="Appointment.PreferredDoctorId" type="hidden"/>
                 <input asp-for="Date" type="hidden"/>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -70,54 +81,9 @@
             </form>
         </div>
     </div>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Appointment.PreferredDoctorId" class="control-label"></label>
-                    <input asp-for="Appointment.PreferredDoctorId" class="form-control" />
-                    <span asp-validation-for="Appointment.PreferredDoctorId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Appointment.PatientId" class="control-label"></label>
-                    <input asp-for="Appointment.PatientId" class="form-control" />
-                    <span asp-validation-for="Appointment.PatientId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Appointment.Reason" class="control-label"></label>
-                    <input asp-for="Appointment.Reason" class="form-control" />
-                    <span asp-validation-for="Appointment.Reason" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Appointment.StartTime" class="control-label"></label>
-                    <input asp-for="Appointment.StartTime" class="form-control" />
-                    <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Appointment.EndTime" class="control-label"></label>
-                    <input asp-for="Appointment.EndTime" class="form-control" />
-                    <span asp-validation-for="Appointment.EndTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Appointment.SpecialAccomodations" class="control-label"></label>
-                    <input asp-for="Appointment.SpecialAccomodations" class="form-control" />
-                    <span asp-validation-for="Appointment.SpecialAccomodations" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+    <div>
+        <a asp-page="Index">Back to Appointments</a>
     </div>
-}
-
-<div>
-    <a asp-page="Index">Back to Appointments</a>
-</div>
 
 <script>
     function submitForm() {
@@ -128,5 +94,13 @@ else
             document.getElementById('doctorIdInput').value = preferredDoctorSelect;
             document.getElementById("selectDoctorDate").submit();
         }     
+    }
+
+    function setPatientId() {
+        var patientSelect = document.getElementById('patientSelect').value;
+
+        if (patientSelect !== "" && patientSelect !== "Select Patient") { 
+            document.getElementById('patientIdInput').value = patientSelect;
+        }
     }
 </script>
