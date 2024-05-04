@@ -46,5 +46,9 @@ namespace MRMS.Data
         public DbSet<MRMS.Models.BloodTest> BloodTest { get; set; } = default!;
 
         public DbSet<MRMS.Models.BloodTestResult> BloodTestResult { get; set; } = default!;
+
+        public DbSet<MRMS.Models.ExternalConsultation> ExternalConsultation { get; set; } = default!;
+
+        public DbSet<MRMS.Models.ExternalBloodTest> ExternalBloodTest { get; set; } = default!;
     }
 }

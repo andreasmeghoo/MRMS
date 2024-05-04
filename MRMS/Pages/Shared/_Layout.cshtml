@@ -57,6 +57,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/BloodTests/Index">Blood Tests</a>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Shared Patient Data</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item nav-link text-dark" asp-area="" asp-page="/SharedPatientData/Consultations">Consultations</a></li>
+                                        <li><a class="dropdown-item nav-link text-dark" asp-area="" asp-page="/SharedPatientData/BloodTests">Blood Tests</a></li>
+                                    </ul>
+                                </li>
                             }
 
                         }

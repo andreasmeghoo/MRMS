@@ -1,0 +1,99 @@
+﻿@page
+@model MRMS.Pages.SharedPatientData.ConsultationsModel
+
+@{
+    ViewData["Title"] = "Shared Consultations";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientAddressLineOne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientAddressLineTwo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].DoctorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].NurseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].ExamDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].CarePlan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].Diagnosis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ExternalConsultation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientAddressLineOne)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientAddressLineTwo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NurseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarePlan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ExternalConsultationId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ExternalConsultationId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ExternalConsultationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
