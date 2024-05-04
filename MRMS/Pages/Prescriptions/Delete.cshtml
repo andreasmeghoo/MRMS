@@ -12,12 +12,6 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prescription.ConsultationId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.ConsultationId)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prescription.Date)
         </dt>
         <dd class="col-sm-10">
@@ -33,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Prescription.DoseQuantity)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.DoseQuantity)
+            @Html.DisplayFor(model => model.Prescription.DoseQuantity) @Html.DisplayFor(model => model.Prescription.DoseQuantityUnits)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prescription.DoseFrequency)
@@ -45,13 +39,13 @@
             @Html.DisplayNameFor(model => model.Prescription.DoseStrength)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.DoseStrength)
+            @Html.DisplayFor(model => model.Prescription.DoseStrength) @Html.DisplayFor(model => model.Prescription.DoseStrengthUnits)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prescription.TotalQuantity)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prescription.TotalQuantity)
+            @Html.DisplayFor(model => model.Prescription.TotalQuantity) @Html.DisplayFor(model => model.Prescription.DoseQuantityUnits)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prescription.Refills)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,8 @@ namespace MRMS.Pages.Appointments
 
         public List<User> Doctors { get; set; }
 
+        public List<User> Patients { get; set; }
+
         public List<(TimeOnly StartTime, TimeOnly EndTime)> AvailableTimeSlots { get; set; }
 
         public DateOnly Date { get; set; }
@@ -43,6 +46,7 @@ namespace MRMS.Pages.Appointments
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Doctors = doctors;
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             if (User.IsInRole("patient"))
             {
                 Appointment = new Appointment();
@@ -52,17 +56,23 @@ namespace MRMS.Pages.Appointments
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(string time, string date)
+        public async Task<IActionResult> OnPostAsync(string time, string date, string? patientId)
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Doctors = doctors;
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            ModelState.Remove("Appointment.PatientId");
             if (!ModelState.IsValid || _context.Appointment == null || Appointment == null)
             {
                 return Page();
             }
+
             if (User.IsInRole("patient"))
             {
                 Appointment.PatientId = _userManager.GetUserId(User);
+            } else
+            {
+                Appointment.PatientId = patientId;
             }
             Time = TimeOnly.TryParse(time, out TimeOnly parsedTime) ? parsedTime : default;
             Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
@@ -70,6 +80,7 @@ namespace MRMS.Pages.Appointments
             Appointment.StartTime = startTime;
             Appointment.EndTime = startTime.AddMinutes(15);
             Appointment.Confirmed = true;
+            
             _context.Appointment.Add(Appointment);
             await _context.SaveChangesAsync();
            
@@ -80,14 +91,16 @@ namespace MRMS.Pages.Appointments
         {
             var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Doctors = doctors;
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+
             if (User.IsInRole("patient"))
             {
                 Appointment.PatientId = _userManager.GetUserId(User);
-                Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
-                ModelState.ClearValidationState("Appointment.Reason");
-
-                AvailableTimeSlots = GenerateTimeSlots(doctorId, Date);
-            }         
+            }
+            Date = DateOnly.TryParse(date, out DateOnly parsedDate) ? parsedDate : default;
+            ModelState.ClearValidationState("Appointment.Reason");
+            AvailableTimeSlots = GenerateTimeSlots(doctorId, Date);
+            
             return Page();
         }
 

@@ -7,8 +7,9 @@ namespace MRMS.Models
     {
         public int ConsultationId { get; set; }
         public int AppointmentId { get; set; }
+        [Display(Name = "Doctor")]
         public String DoctorId { get; set; }
-
+        [Display(Name = "Nurse")]
         public String NurseId { get; set; }
         [Display(Name = "Patient History")]
         public String PatientHistory {  get; set; } 

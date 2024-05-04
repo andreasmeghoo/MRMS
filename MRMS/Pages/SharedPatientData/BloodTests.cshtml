@@ -1,0 +1,124 @@
+﻿@page
+@model MRMS.Pages.SharedPatientData.BloodTestsModel
+
+@{
+    ViewData["Title"] = "Shared Blood Tests";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientAddressLineOne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientAddressLineTwo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].DoctorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].NurseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PerformedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PerformedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].redBloodCellCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].whiteBloodCellCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].plateletCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].glucoseLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].cholestorolLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].liverFunction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].kidneyFunction)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ExternalBloodTest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientAddressLineOne)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientAddressLineTwo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NurseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.redBloodCellCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.whiteBloodCellCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.plateletCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.glucoseLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cholestorolLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.liverFunction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.kidneyFunction)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

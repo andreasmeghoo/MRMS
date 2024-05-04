@@ -1,4 +1,5 @@
 ﻿@page
+@using MRMS.Models;
 @model MRMS.Pages.Consultations.EditModel
 
 @{
@@ -13,19 +14,39 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Consultation.ConsultationId" />
+            <input type="hidden" id="appointmentIdInput" name="appointmentId" />
             <div class="form-group">
-                <label asp-for="Consultation.AppointmentId" class="control-label"></label>
-                <input asp-for="Consultation.AppointmentId" class="form-control" />
+                <label asp-for="Consultation.AppointmentId" class="control-label">Appointment</label>
+                <select asp-for="Consultation.AppointmentId" class="form-control" id="appointmentSelect">
+                    <option value="">Select Appointment</option>
+                    @foreach (var appointment in Model.Appointments)
+                    {
+                        User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                        <option value="@appointment.AppointmentId">@appointment.StartTime: @patient.FirstName @patient.LastName - @appointment.Reason</option>
+                    }
+                </select>
                 <span asp-validation-for="Consultation.AppointmentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Consultation.DoctorId" class="control-label"></label>
-                <input asp-for="Consultation.DoctorId" class="form-control" />
+                <select asp-for="Consultation.DoctorId" class="form-control">
+                    <option value="">Select Doctor</option>
+                    @foreach (var doctor in Model.Doctors)
+                    {
+                        <option value="@doctor.Id">@doctor.FirstName @doctor.LastName</option>
+                    }
+                </select>
                 <span asp-validation-for="Consultation.DoctorId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Consultation.NurseId" class="control-label"></label>
-                <input asp-for="Consultation.NurseId" class="form-control" />
+                <select asp-for="Consultation.NurseId" class="form-control">
+                    <option value="">Select Nurse</option>
+                    @foreach (var nurse in Model.Nurses)
+                    {
+                        <option value="@nurse.Id">@nurse.FirstName @nurse.LastName</option>
+                    }
+                </select>
                 <span asp-validation-for="Consultation.NurseId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -63,7 +84,16 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#appointmentSelect").prop("disabled", true);
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        var appointmentSelect = document.getElementById('appointmentSelect').value;
+
+        if (appointmentSelect !== "" && appointmentSelect !== "Select Appointment") {
+            document.getElementById('appointmentIdInput').value = appointmentSelect;
+        }
+    });
+    
+</script>

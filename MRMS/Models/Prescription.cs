@@ -23,7 +23,7 @@ namespace MRMS.Models
         [Display(Name = "Total Quantity")]
         public int TotalQuantity { get; set; }
         public int Refills { get; set; }
-
+        [Display(Name = "Duration (days)")]
         public int Duration { get; set; }
 
     }

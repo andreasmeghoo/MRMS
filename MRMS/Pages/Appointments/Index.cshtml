@@ -81,13 +81,19 @@ else
         <tbody>
             @foreach (var item in Model.Appointment)
             {
+                if((User.IsInRole("doctor") && item.PreferredDoctorId == Model.UserId) || (!User.IsInRole("doctor"))) 
+                {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PreferredDoctorId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PatientId)
-                    </td>
+                        @{
+                            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);
+                            <td>
+                                @doctor.FirstName @doctor.LastName
+                            </td>
+                            User patient = Model.Patients.FirstOrDefault(p => p.Id == item.PatientId);
+                            <td>
+                                @patient.FirstName @patient.LastName
+                            </td>
+                        }
                     <td>
                         @Html.DisplayFor(modelItem => item.Reason)
                     </td>
@@ -102,7 +108,7 @@ else
                     </td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+
                         <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a> <br>
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,6 +152,7 @@ else
                         </div>
                     </td>
                 </tr>
+            }
             }
         </tbody>
     </table>
