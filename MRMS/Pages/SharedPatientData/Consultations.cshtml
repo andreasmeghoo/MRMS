@@ -88,11 +88,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Diagnosis)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ExternalConsultationId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ExternalConsultationId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ExternalConsultationId">Delete</a>
-            </td>
         </tr>
 }
     </tbody>

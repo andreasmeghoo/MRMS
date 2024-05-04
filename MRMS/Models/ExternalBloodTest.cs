@@ -25,7 +25,7 @@ namespace MRMS.Models
         [Display(Name = "Date Performed")]
         public DateTime PerformedDate { get; set; }
         [Display(Name = "Performed By")]
-        public String PerformedById { get; set; }
+        public String PerformedBy { get; set; }
         [Display(Name = "Red Blood Cell Count")]
         public decimal redBloodCellCount { get; set; }
 

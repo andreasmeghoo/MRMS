@@ -38,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PerformedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PerformedById)
+                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PerformedBy)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].redBloodCellCount)
@@ -95,7 +95,7 @@
                 @Html.DisplayFor(modelItem => item.PerformedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PerformedById)
+                @Html.DisplayFor(modelItem => item.PerformedBy)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.redBloodCellCount)
@@ -117,11 +117,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.kidneyFunction)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ExternalBloodTestId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ExternalBloodTestId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ExternalBloodTestId">Delete</a>
             </td>
         </tr>
 }
