@@ -30,7 +30,7 @@ namespace MRMS.Pages.BloodTests
                 return NotFound();
             }
 
-            var bloodtestresult = await _context.BloodTestResult.FirstOrDefaultAsync(m => m.BloodTestResultId == id);
+            var bloodtestresult = await _context.BloodTestResult.FirstOrDefaultAsync(m => m.BloodTestId == id);
             if (bloodtestresult == null)
             {
                 return NotFound();

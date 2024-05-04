@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Diagnostics;
 using MRMS.Data;
 using MRMS.Models;
 using NuGet.Packaging;
@@ -66,7 +67,24 @@ namespace MRMS.Pages.BloodTests
             _context.BloodTest.Add(BloodTest);
             await _context.SaveChangesAsync();
 
+            BloodTestResult bloodTestResult = new BloodTestResult();
+            bloodTestResult.BloodTestId = BloodTest.BloodTestId;
+            bloodTestResult.redBloodCellCount = GenerateBloodTestResult((decimal)4.5, 9);
+            bloodTestResult.whiteBloodCellCount = GenerateBloodTestResult((decimal)4.5, 100);
+            bloodTestResult.plateletCount = GenerateBloodTestResult((decimal)150, 450);
+            bloodTestResult.glucoseLevel = GenerateBloodTestResult((decimal)70, 600);
+            bloodTestResult.cholestorolLevel = GenerateBloodTestResult((decimal)300, 1000);
+            bloodTestResult.liverFunction = GenerateBloodTestResult((decimal)7, 56);
+            bloodTestResult.kidneyFunction = GenerateBloodTestResult((decimal)0.5, 10);
+            await _context.BloodTestResult.AddAsync(bloodTestResult);
+            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
+        }
+
+        public static decimal GenerateBloodTestResult(decimal minimum, decimal maximum)
+        {
+            Random random = new Random();
+            return (decimal)(random.NextDouble() * (double)(maximum - minimum)) + minimum;
         }
     }
 }
