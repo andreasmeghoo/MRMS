@@ -13,14 +13,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointment.AppointmentId" />
             <div class="form-group">
-                <label asp-for="Appointment.PreferredDoctorId" class="control-label"></label>
-                <input asp-for="Appointment.PreferredDoctorId" class="form-control" />
-                <span asp-validation-for="Appointment.PreferredDoctorId" class="text-danger"></span>
+                <label asp-for="Appointment.PreferredDoctorId" class="control-label">Preferred Doctor</label>
+                <select asp-for="Appointment.PreferredDoctorId" class="form-control">
+                    <option value="">Select Doctor</option>
+                    @foreach (var doctor in Model.Doctors)
+                    {
+                        <option value="@doctor.Id">@doctor.FirstName @doctor.LastName</option>
+                    }
+                </select>
             </div>
+            <input id="patientIdInput" name="patientId" type="hidden" />
             <div class="form-group">
-                <label asp-for="Appointment.PatientId" class="control-label"></label>
-                <input asp-for="Appointment.PatientId" class="form-control" />
-                <span asp-validation-for="Appointment.PatientId" class="text-danger"></span>
+                <label asp-for="Appointment.PatientId" class="control-label">Patient</label>
+                <select asp-for="Appointment.PatientId" class="form-control" id="patientSelect">
+                    <option value="">Select Patient</option>
+                    @foreach (var patient in Model.Patients)
+                    {
+                        <option value="@patient.Id">@patient.FirstName @patient.LastName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.Reason" class="control-label"></label>
@@ -29,12 +40,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.StartTime" class="control-label"></label>
-                <input asp-for="Appointment.StartTime" class="form-control" />
+                <input asp-for="Appointment.StartTime" class="form-control"/>
                 <span asp-validation-for="Appointment.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Appointment.EndTime" class="control-label"></label>
-                <input asp-for="Appointment.EndTime" class="form-control" />
+                <input asp-for="Appointment.EndTime" class="form-control"/>
                 <span asp-validation-for="Appointment.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -52,7 +63,17 @@
 <div>
     <a asp-page="./Index">Back to Appointments List</a>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        $("#patientSelect").prop("disabled", true);
+
+        var patientSelect = document.getElementById('patientSelect').value;
+
+        if (patientSelect !== "" && patientSelect !== "Select Patient") {
+            document.getElementById('patientIdInput').value = patientSelect;
+        }
+
+    });
+</script>

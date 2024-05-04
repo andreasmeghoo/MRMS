@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,17 +17,25 @@ namespace MRMS.Pages.Appointments
     public class EditModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(MRMS.Data.MRMSContext context)
+        public EditModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
         public Appointment Appointment { get; set; } = default!;
 
+        public List<User> Doctors { get; set; }
+
+        public List<User> Patients { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             if (id == null || _context.Appointment == null)
             {
                 return NotFound();
@@ -43,13 +52,17 @@ namespace MRMS.Pages.Appointments
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string patientId)
         {
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            ModelState.Remove("Appointment.PatientId");
+            Appointment.PatientId = patientId;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            
             _context.Attach(Appointment).State = EntityState.Modified;
 
             try
