@@ -87,7 +87,7 @@ namespace MRMSTests
         }
 
         [Fact]
-        public void TestGenerateTimeSlots()
+        public void TestGenerateAvailableTimeSlots()
         {
             //Arrange
             List<(TimeOnly, TimeOnly)> timeSlots = new List<(TimeOnly, TimeOnly)>();
