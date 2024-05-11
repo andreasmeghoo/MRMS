@@ -3,12 +3,12 @@
 @model MRMS.Pages.Appointments.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete Appointment";
+    ViewData["Title"] = "Cancel Appointment";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h3>Are you sure you want to to delete this?</h3>
+<h3>Are you sure you want to to cancel this?</h3>
 <div>
     <hr />
     <dl class="row">
@@ -59,7 +59,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="Appointment.AppointmentId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Cancel" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to Appointments List</a>
     </form>
 </div>
