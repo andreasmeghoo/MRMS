@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MRMS.Data;
 using MRMS.Models;
+using MRMS.Enums;
 
 namespace MRMS.Pages.Appointments
 {
@@ -52,12 +53,13 @@ namespace MRMS.Pages.Appointments
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(string patientId)
+        public async Task<IActionResult> OnPostAsync(string patientId, bool appointmentConfirmed)
         {
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             ModelState.Remove("Appointment.PatientId");
             Appointment.PatientId = patientId;
+            Appointment.Confirmed = appointmentConfirmed;
             if (!ModelState.IsValid)
             {
                 return Page();
