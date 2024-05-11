@@ -11,5 +11,7 @@ namespace MRMS.Models
 
         public string Reason { get; set; }
 
+        public bool Granted { get; set; }
+
     }
 }
