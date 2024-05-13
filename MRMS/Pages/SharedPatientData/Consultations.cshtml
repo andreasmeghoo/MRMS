@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientAddressLineTwo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientStreet)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ExternalConsultation[0].PatientCity)
             </th>
             <th>
@@ -59,6 +62,9 @@
                 @Html.DisplayFor(modelItem => item.PatientAddressLineTwo)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.PatientStreet)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.PatientCity)
             </td>
             <td>
@@ -82,11 +88,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Diagnosis)
             </td>
-                <td>
-                    <form asp-page-handler="ImportData" method="post">
-                    <button type="submit" class="btn btn-primary">Import Data</button>
-                    </form>
-                </td>
         </tr>
 }
     </tbody>

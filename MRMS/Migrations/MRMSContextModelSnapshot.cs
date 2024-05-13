@@ -156,9 +156,6 @@ namespace MRMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExternalConsultationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NurseId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -197,6 +194,7 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientAddressLineTwo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientCity")
@@ -204,6 +202,10 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientStreet")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -276,6 +278,7 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientAddressLineTwo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientCity")
@@ -287,6 +290,10 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientStreet")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -452,31 +459,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "957bd9ff-8e15-4579-a923-e56c70cdedc2",
+                            Id = "1eec0dd0-0f79-495a-8b3f-31cb07f44776",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6c201af8-a46e-4f6d-a17a-59cafc664282",
+                            Id = "0d7f1dff-2ad9-4941-901a-d8e4bd74260e",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "81c63d17-5a32-412c-9c00-942221226b60",
+                            Id = "11dd8675-705d-4678-b3a5-f925b236b696",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "dc72f71e-2f64-469e-94c0-118160215fe1",
+                            Id = "f197e7c2-a2d4-483a-9ac5-eedcda97c9ce",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "2fed795f-74b5-4341-8f3e-7f4582f64190",
+                            Id = "a7df6f48-1bed-4c21-8a8b-13f3e11e5a54",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });
