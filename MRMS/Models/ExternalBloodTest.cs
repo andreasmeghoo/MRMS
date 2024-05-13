@@ -40,5 +40,9 @@ namespace MRMS.Models
         public decimal liverFunction { get; set; }
         [Display(Name = "Kidney Function")]
         public decimal kidneyFunction { get; set; }
+
+        public bool Imported { get; set; }
+
+        public string MatchedPatientId { get; set; }
     }
 }
