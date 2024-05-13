@@ -24,6 +24,8 @@ namespace MRMS.Models
 
         public String Diagnosis { get; set; }
 
+        public int? ExternalConsultationId { get; set; }
+
 
     }
 }

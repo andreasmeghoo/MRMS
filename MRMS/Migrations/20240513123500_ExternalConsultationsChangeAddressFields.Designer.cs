@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240513123500_ExternalConsultationsChangeAddressFields")]
+    partial class ExternalConsultationsChangeAddressFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,9 +158,6 @@ namespace MRMS.Migrations
                     b.Property<string>("ExamDetails")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ExternalConsultationId")
-                        .HasColumnType("int");
 
                     b.Property<string>("NurseId")
                         .IsRequired()
@@ -452,31 +452,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "957bd9ff-8e15-4579-a923-e56c70cdedc2",
+                            Id = "6bf87236-308f-411e-b1b5-6127ee111fe1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6c201af8-a46e-4f6d-a17a-59cafc664282",
+                            Id = "60132174-e8bd-4736-befd-cde1585532cb",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "81c63d17-5a32-412c-9c00-942221226b60",
+                            Id = "697452d6-dfdf-4974-a63b-079e24cdad49",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "dc72f71e-2f64-469e-94c0-118160215fe1",
+                            Id = "bb456718-946f-4be3-ab15-9c389befa976",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "2fed795f-74b5-4341-8f3e-7f4582f64190",
+                            Id = "ba2870f8-553c-496e-adb0-61340b4864ee",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });

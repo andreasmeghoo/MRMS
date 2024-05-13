@@ -20,9 +20,6 @@
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientAddressLineTwo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientStreet)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientCity)
             </th>
             <th>
@@ -77,9 +74,6 @@
                 @Html.DisplayFor(modelItem => item.PatientAddressLineTwo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PatientStreet)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PatientCity)
             </td>
             <td>
@@ -117,6 +111,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.kidneyFunction)
+            </td>
+            <td>
+                <button class="btn btn-primary">Import Data</button>
             </td>
         </tr>
 }
