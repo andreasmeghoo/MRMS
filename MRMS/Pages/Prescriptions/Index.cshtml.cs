@@ -29,6 +29,13 @@ namespace MRMS.Pages.Prescriptions
         public IList<RepeatPrescription> RepeatPrescriptions { get;set; }
         public String UserId { get; set; }
 
+        public IList<Consultation> AllConsultations { get; set; } = default!;
+
+        public IList<Appointment> AllAppointments { get; set; } = default!;
+        public IList<User> Patients { get; set; } = default!;
+
+        public IList<User> Doctors { get; set; } = default!;
+
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
@@ -36,10 +43,12 @@ namespace MRMS.Pages.Prescriptions
             if (_context.Prescription != null && _context.Consultation != null && _context.Appointment != null)
             {
                 IList<Prescription> AllPrescriptions = await _context.Prescription.ToListAsync();
-                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
-                IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
+                AllAppointments = await _context.Appointment.ToListAsync();
+                AllConsultations = await _context.Consultation.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();
                 IList<int> CurrentUserConsultations = new List<int>();
+                Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+                Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
 
                 if (!User.IsInRole("patient"))
                 {

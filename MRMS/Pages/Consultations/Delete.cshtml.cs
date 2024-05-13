@@ -30,17 +30,25 @@ namespace MRMS.Pages.Consultations
 
         public List<User> Nurses { get; set; }
 
+        public IList<Appointment> Appointments { get; set; }
+
+        public IList<User> Patients { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             if (id == null || _context.Consultation == null)
             {
                 return NotFound();
             }
 
             var consultation = await _context.Consultation.FirstOrDefaultAsync(m => m.ConsultationId == id);
-
+            if (_context.Appointment != null)
+            {
+                Appointments = _context.Appointment.ToList();
+            }
             if (consultation == null)
             {
                 return NotFound();

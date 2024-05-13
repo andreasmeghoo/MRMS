@@ -43,7 +43,7 @@ namespace MRMS.Pages.Appointments
             }
         }
 
-        public void OnPostUpdateStatus(int id, Enums.AppointmentStatus newStatus)
+        public async Task<IActionResult> OnPostUpdateStatusAsync(int id, Enums.AppointmentStatus newStatus)
         {
             var appointment = _context.Appointment.Single(x => x.AppointmentId == id);
             if (appointment != null)
@@ -55,6 +55,16 @@ namespace MRMS.Pages.Appointments
                     Appointment = _context.Appointment.ToList();
                 }
             }
+
+            UserId = _userManager.GetUserId(User);
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            if (_context.Appointment != null)
+            {
+                Appointment = await _context.Appointment.ToListAsync();
+            }
+
+            return Page();
         }
     }
 }

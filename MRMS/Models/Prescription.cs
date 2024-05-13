@@ -6,6 +6,7 @@ namespace MRMS.Models
     public class Prescription
     {
         public int PrescriptionId { get; set; }
+        [Display(Name = "Consultation")]
         public int ConsultationId { get; set; }
         [Display(Name = "Date Prescribed")]
         public DateTime Date { get; set; }

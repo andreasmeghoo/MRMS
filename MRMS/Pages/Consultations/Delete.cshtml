@@ -13,20 +13,28 @@
     <hr />
     <dl class="row">
         @{
-          User doctor = Model.Doctors.FirstOrDefault(d => d.Id == Model.Consultation.DoctorId);
-          User nurse = Model.Nurses.FirstOrDefault(n => n.Id == Model.Consultation.NurseId);
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Consultation.DoctorId)
-        </dt>
-        <dd class="col-sm-10">
-            @doctor.FirstName @doctor.LastName
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Consultation.NurseId)
-        </dt>
-        <dd class="col-sm-10">
-            @nurse.FirstName @nurse.LastName
-        </dd>
+            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == Model.Consultation.DoctorId);
+            User nurse = Model.Nurses.FirstOrDefault(n => n.Id == Model.Consultation.NurseId);
+            Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == Model.Consultation.AppointmentId);
+            User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Consultation.AppointmentId)
+            </dt>
+            <dd class="col-sm-10">
+                @appointment.StartTime:<br> @patient.FirstName @patient.LastName - @appointment.Reason
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Consultation.DoctorId)
+            </dt>
+            <dd class="col-sm-10">
+                @doctor.FirstName @doctor.LastName
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Consultation.NurseId)
+            </dt>
+            <dd class="col-sm-10">
+                @nurse.FirstName @nurse.LastName
+            </dd>
         }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Consultation.PatientHistory)
@@ -53,7 +61,7 @@
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Consultation.Comments)
-        </dd>
+            </dd>
         }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Consultation.Diagnosis)
@@ -62,7 +70,7 @@
             @Html.DisplayFor(model => model.Consultation.Diagnosis)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="Consultation.ConsultationId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

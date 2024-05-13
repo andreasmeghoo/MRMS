@@ -29,6 +29,10 @@ namespace MRMS.Pages.Consultations
 
         public IList<Consultation> Consultation { get;set; } = default!;
 
+        public IList<Appointment> Appointments { get; set; }
+
+        public IList<User> Patients { get; set; }
+
         public List<User> Doctors { get; set; }
 
         public List<User> Nurses { get; set; }
@@ -39,9 +43,14 @@ namespace MRMS.Pages.Consultations
             UserId = _userManager.GetUserId(User);
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
 
             if (_context.Consultation != null && _context.Appointment != null)
             {
+                if (_context.Appointment != null)
+                {
+                    Appointments = _context.Appointment.ToList();
+                }
                 IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
                 IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();

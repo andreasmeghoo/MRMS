@@ -26,21 +26,29 @@ namespace MRMS.Pages.BloodTests
 
         public IList<BloodTest> BloodTest { get;set; } = default!;
         public List<User> Staff { get;set; } = new List<User>();
+
+        public IList<Consultation> AllConsultations { get; set; } = default!;
+
+        public IList<Appointment> AllAppointments { get; set; } = default!;
+        public IList<User> Patients { get; set; } = default!;
+
+        public IList<User> Doctors { get; set; } = default!;
         public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
-            var doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
+            Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList(); 
             var nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
-            Staff.AddRange(doctors);
+            Staff.AddRange(Doctors);
             Staff.AddRange(nurses);
 
             if (_context.BloodTest != null && _context.Consultation != null && _context.Appointment != null)
             {
                 IList<BloodTest> AllBloodTests = await _context.BloodTest.ToListAsync();
-                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
-                IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
+                AllAppointments = await _context.Appointment.ToListAsync();
+                AllConsultations = await _context.Consultation.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();
                 IList<int> CurrentUserConsultations = new List<int>();
 
