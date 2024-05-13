@@ -25,12 +25,14 @@ namespace MRMS.Pages.Prescriptions
         }
 
         public IList<Prescription> Prescription { get;set; } = default!;
+
+        public IList<RepeatPrescription> RepeatPrescriptions { get;set; }
         public String UserId { get; set; }
 
         public async Task OnGetAsync()
         {
             UserId = _userManager.GetUserId(User);
-
+            RepeatPrescriptions = await _context.RepeatPrescription.ToListAsync();
             if (_context.Prescription != null && _context.Consultation != null && _context.Appointment != null)
             {
                 IList<Prescription> AllPrescriptions = await _context.Prescription.ToListAsync();
@@ -71,6 +73,20 @@ namespace MRMS.Pages.Prescriptions
                     }
                 }
 
+            }
+        }
+
+        public void OnPostGrantPrescription(int id)
+        {
+            var repeatPrescription = _context.RepeatPrescription.Single(x => x.PrescriptionId == id);
+            if(repeatPrescription != null) {
+                repeatPrescription.Granted = true;
+                _context.SaveChanges();
+                if (_context.Prescription != null && _context.RepeatPrescription != null)
+                {
+                    Prescription = _context.Prescription.ToList();
+                    RepeatPrescriptions = _context.RepeatPrescription.ToList();
+                }
             }
         }
     }

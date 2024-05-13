@@ -1,0 +1,60 @@
+﻿@page
+@model MRMS.Pages.Prescriptions.RepeatModel
+
+@{
+    ViewData["Title"] = "Request Repeat Prescription";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="RepeatPrescription.PrescriptionId" class="form-control" type="hidden"/>
+            <h3>@Model.prescription.Medication - @Html.DisplayFor(modelItem => Model.prescription.DoseStrength) @Html.DisplayFor(modelItem => Model.prescription.DoseStrengthUnits)</h3>
+            <div class="form-group">
+                <label asp-for="RepeatPrescription.DateRequested" class="control-label"></label>
+                <input asp-for="RepeatPrescription.DateRequested" class="form-control" id="dateInput" readonly />
+                <span asp-validation-for="RepeatPrescription.DateRequested" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RepeatPrescription.Reason" class="control-label"></label>
+                <input asp-for="RepeatPrescription.Reason" class="form-control" />
+                <span asp-validation-for="RepeatPrescription.Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Request" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to Prescriptions</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function getCurrentDateTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = ('0' + (now.getMonth() + 1)).slice(-2);
+        var day = ('0' + now.getDate()).slice(-2);
+        var hours = ('0' + now.getHours()).slice(-2);
+        var minutes = ('0' + now.getMinutes()).slice(-2);
+        return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    }
+
+    $("#dateInput").on("keydown", function (e) {
+        var blockedKeys = [191, 40, 38, 39, 37, 186, 32];
+
+        if (blockedKeys.includes(e.keyCode)) {
+            e.preventDefault();
+        }
+    });
+
+    $(document).ready(function () {
+        $("#dateInput").val(getCurrentDateTime());
+    });
+</script>
