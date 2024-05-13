@@ -11,9 +11,8 @@ namespace MRMS.Models
         [Display(Name = "Address Line 1")]
         public string PatientAddressLineOne { get; set; }
         [Display(Name = "Address Line 2")]
-        public string PatientAddressLineTwo { get; set; }
-        [Display(Name = "Street")]
-        public string PatientStreet { get; set; }
+        public string? PatientAddressLineTwo { get; set; }
+
         [Display(Name = "City")]
         public string PatientCity { get; set; }
 
@@ -32,6 +31,10 @@ namespace MRMS.Models
         public String? Comments { get; set; }
 
         public String Diagnosis { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public bool Imported { get; set; }
 
     }
 

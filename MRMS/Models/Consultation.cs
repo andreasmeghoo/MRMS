@@ -7,6 +7,7 @@ namespace MRMS.Models
     {
         public int ConsultationId { get; set; }
         [Display(Name = "Appointment")]
+        public int? ExternalConsultationId { get; set; }
         public int AppointmentId { get; set; }
         [Display(Name = "Doctor")]
         public String DoctorId { get; set; }
@@ -24,6 +25,6 @@ namespace MRMS.Models
 
         public String Diagnosis { get; set; }
 
-
+     
     }
 }
