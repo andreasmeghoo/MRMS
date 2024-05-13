@@ -5,6 +5,7 @@ namespace MRMS.Models
     public class BloodTest
     {
         public int BloodTestId { get; set; }
+        [Display(Name = "Consultation")]
         public int ConsultationId { get; set; }
 
         public string Comments { get; set; }

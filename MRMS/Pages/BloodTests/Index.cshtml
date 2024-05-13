@@ -43,6 +43,9 @@ else
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.BloodTest[0].ConsultationId)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.BloodTest[0].Comments)
                 </th>
                 <th>
@@ -58,6 +61,15 @@ else
             @foreach (var item in Model.BloodTest)
             {
                 <tr>
+                    @{
+                        Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == item.ConsultationId);
+                        Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
+                        User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                        User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                        <td>
+                            Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.Comments)
                     </td>

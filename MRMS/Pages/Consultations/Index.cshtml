@@ -44,6 +44,9 @@ else
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.Consultation[0].AppointmentId)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Consultation[0].DoctorId)
                 </th>
                 <th>
@@ -72,6 +75,11 @@ else
             {
                 <tr>
                     @{
+                        Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == item.AppointmentId);
+                        User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                        <td>
+                            @appointment.StartTime:<br> @patient.FirstName @patient.LastName - @appointment.Reason
+                        </td>
                         User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.DoctorId);
                         <td>
                             @doctor.FirstName @doctor.LastName
