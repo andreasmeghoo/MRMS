@@ -99,17 +99,16 @@ else
                         Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
                         User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
                         User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                        bool RepeatPrescriptionRequested = Model.RepeatPrescriptions.Any(r => r.PrescriptionId == item.PrescriptionId);
+                        RepeatPrescription repeatPrescription = null;
                         <td>
                             Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
-                        </td>
-                    }
-                bool RepeatPrescriptionRequested = Model.RepeatPrescriptions.Any(r => r.PrescriptionId == item.PrescriptionId);
-                RepeatPrescription repeatPrescription = null;
+                        </td>     
+                }
                 if (RepeatPrescriptionRequested)
                 {
                     repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
                 }
-                <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
