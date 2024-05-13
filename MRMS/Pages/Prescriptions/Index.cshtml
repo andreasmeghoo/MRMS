@@ -104,10 +104,11 @@ else
                         <td>
                             Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
                         </td>     
-                }
+                
                 if (RepeatPrescriptionRequested)
                 {
                     repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
+                }
                 }
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
