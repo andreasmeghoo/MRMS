@@ -12,6 +12,12 @@
     <div class="d-flex p-2 bd-highlight">
         @foreach (var item in Model.Prescription)
         {
+            bool RepeatPrescriptionRequested = Model.RepeatPrescriptions.Any(r => r.PrescriptionId == item.PrescriptionId);
+            RepeatPrescription repeatPrescription = null;
+            if (RepeatPrescriptionRequested)
+            {
+                repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
+            }
             <div class="card m-3 text-dark bg-warning" style="width: 20rem;">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Medication)</h5>
@@ -21,9 +27,28 @@
                         <b>Strength:</b> @Html.DisplayFor(modelItem => item.DoseStrength) @Html.DisplayFor(model=> item.DoseStrengthUnits)<br />
                         <b>Date Prescribed:</b> @item.Date.ToShortDateString()<br />
                     </p>
-                    <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
+                        </div>
+                        <div class="col-auto">
+                            @if (RepeatPrescriptionRequested && repeatPrescription.Granted != true)
+                            {
+                                <span class="badge bg-secondary">Repeat Prescription Requested</span>
+                            }
+                            else if (RepeatPrescriptionRequested && repeatPrescription.Granted)
+                            {
+                                <span class="badge bg-success">Repeat Prescription Granted</span>
+                            }
+                            else
+                            {
+                                <a asp-page="./Repeat" asp-route-id="@item.PrescriptionId" class="btn btn-secondary mt-2" asp-route-id="@item.PrescriptionId">Request Repeat Prescription</a>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
+
         }
     </div>
 }
@@ -78,6 +103,13 @@ else
                             Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
                         </td>
                     }
+                bool RepeatPrescriptionRequested = Model.RepeatPrescriptions.Any(r => r.PrescriptionId == item.PrescriptionId);
+                RepeatPrescription repeatPrescription = null;
+                if (RepeatPrescriptionRequested)
+                {
+                    repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
+                }
+                <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
@@ -105,6 +137,17 @@ else
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.PrescriptionId">Edit</a> |
                         <a asp-page="./Delete" asp-route-id="@item.PrescriptionId">Delete</a>
+                        @if (RepeatPrescriptionRequested && repeatPrescription.Granted != true)
+                        {
+                            <form asp-page-handler="GrantPrescription" method="post">
+                                <input type="hidden" name="id" value="@item.PrescriptionId" />
+                                <button class="btn btn-primary">Grant Repeat Prescription</button>
+                            </form>
+                        }
+                        else if (RepeatPrescriptionRequested && repeatPrescription.Granted)
+                        {
+                            <span class="badge bg-success">Repeat Prescription Granted</span>
+                        }
                     </td>
                 </tr>
             }
