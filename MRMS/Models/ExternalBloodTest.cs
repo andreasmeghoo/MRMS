@@ -43,6 +43,6 @@ namespace MRMS.Models
 
         public bool Imported { get; set; }
 
-        public string MatchedPatientId { get; set; }
+        public string? MatchedPatientId { get; set; }
     }
 }
