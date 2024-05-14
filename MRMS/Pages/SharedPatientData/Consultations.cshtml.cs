@@ -69,6 +69,7 @@ namespace MRMS.Pages.SharedPatientData
                     return RedirectToPage("../Consultations/Index");
                 }
             }
+            ModelState.AddModelError("consultationNoMatch", "No matching patient found for this external consultation.");
             return Page();
         }
     }

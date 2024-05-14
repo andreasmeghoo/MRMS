@@ -76,7 +76,7 @@ namespace MRMS.Pages.SharedPatientData
                     return RedirectToPage("../BloodTests/Index");
                 }
             }
-
+            ModelState.AddModelError("bloodTestNoMatch", "No matching patient found for this external blood test.");
             return Page();
         }
     }

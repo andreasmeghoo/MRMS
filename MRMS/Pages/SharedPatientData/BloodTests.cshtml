@@ -6,6 +6,16 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+@if (!ViewData.ModelState.IsValid)
+{
+    var errorMessage = ViewData.ModelState["bloodTestNoMatch"].Errors.FirstOrDefault()?.ErrorMessage;
+    if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
+}
 
 <br />
 <table class="table table-striped">
