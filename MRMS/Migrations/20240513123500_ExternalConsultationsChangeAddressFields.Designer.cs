@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240513123500_ExternalConsultationsChangeAddressFields")]
+    partial class ExternalConsultationsChangeAddressFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +78,6 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ConsultationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExternalBloodTestId")
                         .HasColumnType("int");
 
                     b.Property<string>("PerformedById")
@@ -159,9 +159,6 @@ namespace MRMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExternalConsultationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NurseId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -189,12 +186,6 @@ namespace MRMS.Migrations
 
                     b.Property<string>("DoctorName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Imported")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MatchedPatientId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NurseName")
@@ -264,9 +255,6 @@ namespace MRMS.Migrations
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Diagnosis")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,12 +265,6 @@ namespace MRMS.Migrations
 
                     b.Property<string>("ExamDetails")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Imported")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MatchedPatientId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NurseName")
@@ -359,32 +341,6 @@ namespace MRMS.Migrations
                     b.HasKey("PrescriptionId");
 
                     b.ToTable("Prescription");
-                });
-
-            modelBuilder.Entity("MRMS.Models.RepeatPrescription", b =>
-                {
-                    b.Property<int>("RepeatPrescriptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RepeatPrescriptionId"));
-
-                    b.Property<DateTime>("DateRequested")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Granted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PrescriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RepeatPrescriptionId");
-
-                    b.ToTable("RepeatPrescription");
                 });
 
             modelBuilder.Entity("MRMS.Models.User", b =>
@@ -496,31 +452,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e30d2ec2-e813-459d-b921-56b03852aa0f",
+                            Id = "6bf87236-308f-411e-b1b5-6127ee111fe1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "ebd713d7-f534-4728-bfc7-b0dd4ba2aa9c",
+                            Id = "60132174-e8bd-4736-befd-cde1585532cb",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "fcf73ac2-8acf-4d09-802e-97e3083110ea",
+                            Id = "697452d6-dfdf-4974-a63b-079e24cdad49",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "324e23f1-e3da-4d7f-bcbe-b6f68e04d9e1",
+                            Id = "bb456718-946f-4be3-ab15-9c389befa976",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "49ba92d8-b18a-40ae-8b8d-01f32e13444a",
+                            Id = "ba2870f8-553c-496e-adb0-61340b4864ee",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });

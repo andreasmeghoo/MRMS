@@ -1,4 +1,5 @@
 ﻿@page
+@using MRMS.Models;
 @model MRMS.Pages.Prescriptions.RepeatModel
 
 @{
@@ -14,6 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="RepeatPrescription.PrescriptionId" class="form-control" type="hidden"/>
             <h3>@Model.prescription.Medication - @Html.DisplayFor(modelItem => Model.prescription.DoseStrength) @Html.DisplayFor(modelItem => Model.prescription.DoseStrengthUnits)</h3>
+            @{
+                Consultation consultation = Model.AllConsultations.FirstOrDefault(c => c.ConsultationId == Model.prescription.ConsultationId);
+                User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+            <p>Consultation: Dr. @doctor.FirstName @doctor.LastName - @consultation.Diagnosis</p>
+            }
             <div class="form-group">
                 <label asp-for="RepeatPrescription.DateRequested" class="control-label"></label>
                 <input asp-for="RepeatPrescription.DateRequested" class="form-control" id="dateInput" readonly />

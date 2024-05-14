@@ -58,11 +58,13 @@
 }
 else
 {
-    <p>
-        <a asp-page="Create">New Appointment</a>
-    </p>
-    <table class="table">
-        <thead>
+    <div>
+        <a class="btn btn-primary" asp-page="Create">New Appointment</a>
+        <a class="btn btn-primary" asp-page="../Consultations/Create">New Consultation</a>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Appointment[0].PreferredDoctorId)
@@ -88,8 +90,6 @@ else
         <tbody>
             @foreach (var item in Model.Appointment)
             {
-                if((User.IsInRole("doctor") && item.PreferredDoctorId == Model.UserId) || (!User.IsInRole("doctor"))) 
-                {
                 <tr>
                         @{
                             User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);
@@ -159,7 +159,6 @@ else
                         </div>
                     </td>
                 </tr>
-            }
             }
         </tbody>
     </table>

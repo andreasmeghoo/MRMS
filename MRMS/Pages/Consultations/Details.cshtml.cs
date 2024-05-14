@@ -26,6 +26,9 @@ namespace MRMS.Pages.Consultations
 
         public Consultation Consultation { get; set; } = default!;
 
+        public IList<Appointment> Appointments { get; set; }
+
+        public IList<ExternalConsultation> ExternalConsultations { get; set; } = default!;
         public List<User> Doctors { get; set; }
 
         public List<User> Nurses { get; set; }
@@ -35,6 +38,8 @@ namespace MRMS.Pages.Consultations
 
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
+            Appointments = _context.Appointment.ToList();
+            ExternalConsultations = _context.ExternalConsultation.ToList();
 
             if (id == null || _context.Consultation == null)
             {

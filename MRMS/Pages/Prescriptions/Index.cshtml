@@ -12,53 +12,56 @@
     <div class="d-flex p-2 bd-highlight">
         @foreach (var item in Model.Prescription)
         {
+            Consultation consultation = Model.AllConsultations.FirstOrDefault(c => c.ConsultationId == item.ConsultationId);
+            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
             bool RepeatPrescriptionRequested = Model.RepeatPrescriptions.Any(r => r.PrescriptionId == item.PrescriptionId);
-            RepeatPrescription repeatPrescription = null;
-            if (RepeatPrescriptionRequested)
-            {
-                repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
-            }
-            <div class="card m-3 text-dark bg-warning" style="width: 20rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Medication)</h5>
-                    <p class="card-text">
-                        <b>Dosage:</b> @Html.DisplayFor(modelItem => item.DoseQuantity) @Html.DisplayFor(model=> item.DoseQuantityUnits)<br />
-                        <b>Frequency:</b> @Html.DisplayFor(modelItem => item.DoseFrequency)<br />
-                        <b>Strength:</b> @Html.DisplayFor(modelItem => item.DoseStrength) @Html.DisplayFor(model=> item.DoseStrengthUnits)<br />
-                        <b>Date Prescribed:</b> @item.Date.ToShortDateString()<br />
-                    </p>
-                    <div class="row">
-                        <div class="col">
-                            <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
-                        </div>
-                        <div class="col-auto">
-                            @if (RepeatPrescriptionRequested && repeatPrescription.Granted != true)
-                            {
-                                <span class="badge bg-secondary">Repeat Prescription Requested</span>
-                            }
-                            else if (RepeatPrescriptionRequested && repeatPrescription.Granted)
-                            {
-                                <span class="badge bg-success">Repeat Prescription Granted</span>
-                            }
-                            else
-                            {
-                                <a asp-page="./Repeat" asp-route-id="@item.PrescriptionId" class="btn btn-secondary mt-2" asp-route-id="@item.PrescriptionId">Request Repeat Prescription</a>
-                            }
+                RepeatPrescription repeatPrescription = null;
+                if (RepeatPrescriptionRequested)
+                {
+                    repeatPrescription = Model.RepeatPrescriptions.FirstOrDefault(r => r.PrescriptionId == item.PrescriptionId);
+                }
+                <div class="card m-3 text-dark bg-warning" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Medication)</h5>
+                        <p class="card-text">
+                            <b>Consultation: </b> Dr. @doctor.FirstName @doctor.LastName - @consultation.Diagnosis<br/>
+                            <b>Dosage:</b> @Html.DisplayFor(modelItem => item.DoseQuantity) @Html.DisplayFor(model=> item.DoseQuantityUnits)<br />
+                            <b>Frequency:</b> @Html.DisplayFor(modelItem => item.DoseFrequency)<br />
+                            <b>Strength:</b> @Html.DisplayFor(modelItem => item.DoseStrength) @Html.DisplayFor(model=> item.DoseStrengthUnits)<br />
+                            <b>Date Prescribed:</b> @item.Date.ToShortDateString()<br />
+                        </p>
+                        <div class="row">
+                            <div class="col">
+                                <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a>
+                            </div>
+                            <div class="col-auto">
+                                @if (RepeatPrescriptionRequested && repeatPrescription.Granted != true)
+                                {
+                                    <span class="badge bg-secondary">Repeat Prescription Requested</span>
+                                }
+                                else if (RepeatPrescriptionRequested && repeatPrescription.Granted)
+                                {
+                                    <span class="badge bg-success">Repeat Prescription Granted</span>
+                                }
+                                else
+                                {
+                                    <a asp-page="./Repeat" asp-route-id="@item.PrescriptionId" class="btn btn-secondary mt-2" asp-route-id="@item.PrescriptionId">Request Repeat Prescription</a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
         }
     </div>
 }
 else
 {
-    <p>
-        <a asp-page="Create">Prescribe Medication</a>
-    </p>
-    <table class="table">
-        <thead>
+    <div>
+        <a class="btn btn-primary" asp-page="Create">Prescribe Medication</a>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Prescription[0].ConsultationId)

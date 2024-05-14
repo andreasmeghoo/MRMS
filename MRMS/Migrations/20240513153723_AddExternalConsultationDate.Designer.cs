@@ -4,6 +4,7 @@ using MRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MRMS.Migrations
 {
     [DbContext(typeof(MRMSContext))]
-    partial class MRMSContextModelSnapshot : ModelSnapshot
+    [Migration("20240513153723_AddExternalConsultationDate")]
+    partial class AddExternalConsultationDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +78,6 @@ namespace MRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ConsultationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExternalBloodTestId")
                         .HasColumnType("int");
 
                     b.Property<string>("PerformedById")
@@ -191,12 +191,6 @@ namespace MRMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Imported")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MatchedPatientId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NurseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,12 +271,6 @@ namespace MRMS.Migrations
 
                     b.Property<string>("ExamDetails")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Imported")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MatchedPatientId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NurseName")
@@ -496,31 +484,31 @@ namespace MRMS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e30d2ec2-e813-459d-b921-56b03852aa0f",
+                            Id = "a4272445-27a3-4347-b47a-daccd99c43ac",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "ebd713d7-f534-4728-bfc7-b0dd4ba2aa9c",
+                            Id = "1769583b-8e45-4199-8d01-5d991399729c",
                             Name = "patient",
                             NormalizedName = "patient"
                         },
                         new
                         {
-                            Id = "fcf73ac2-8acf-4d09-802e-97e3083110ea",
+                            Id = "9b84fe12-f710-4584-bc20-11aa83f3134c",
                             Name = "receptionist",
                             NormalizedName = "receptionist"
                         },
                         new
                         {
-                            Id = "324e23f1-e3da-4d7f-bcbe-b6f68e04d9e1",
+                            Id = "56b639a7-1ba5-4a28-9c98-3f359ba25b01",
                             Name = "nurse",
                             NormalizedName = "nurse"
                         },
                         new
                         {
-                            Id = "49ba92d8-b18a-40ae-8b8d-01f32e13444a",
+                            Id = "3a759ddc-806d-4116-b42b-a0ba7e4a56ac",
                             Name = "doctor",
                             NormalizedName = "doctor"
                         });

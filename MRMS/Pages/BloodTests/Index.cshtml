@@ -2,14 +2,9 @@
 @using MRMS.Models;
 @model MRMS.Pages.BloodTests.IndexModel
 
-@if (User.IsInRole("patient"))
-{
-    ViewData["Title"] = "Past Blood Tests";
-}
-else
-{
-    ViewData["Title"] = "Blood Tests";
-}
+ @{
+     ViewData["Title"] = "Blood Tests";
+     }
 
 <h1>@ViewData["Title"]</h1>
 @if (User.IsInRole("patient"))
@@ -22,11 +17,28 @@ else
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Comments)</h5>
                     <p class="card-text">
                         @{
-                            User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
-                            <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
+                            if(item.ExternalBloodTestId != null)
+                            {
+                                ExternalBloodTest externalBloodTest = Model.ExternalBloodTests.FirstOrDefault(e => e.ExternalBloodTestId == item.ExternalBloodTestId);
+                                <span><b>Consultation:</b> Dr. @externalBloodTest.DoctorName - External Consultation</span>
+                                <br/>
+                                <span><b>Performed By:</b> @externalBloodTest.PerformedBy</span>
+                                <br />
+                                <span><b>Performed:</b> @externalBloodTest.PerformedDate</span>
+                            }else
+                            {
+                                User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
+                                BloodTest bloodTest = Model.BloodTest.FirstOrDefault(b => b.BloodTestId == item.BloodTestId);
+                                Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == bloodTest.ConsultationId);
+                                User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                                <span><b>Consultation:</b> Dr. @doctor.FirstName @doctor.LastName - @consultation.Diagnosis</span>
+                                <br/>
+                                <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
+                                <br />
+                                <span><b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)</span>
+                            }
                             <br />
                         }
-                        <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
                 </div>
@@ -36,11 +48,12 @@ else
 }
 else
 {
-    <p>
-        <a asp-page="Create">Order Blood Test</a>
-    </p>
-    <table class="table">
-        <thead>
+    <div>
+        <a class="btn btn-primary" asp-page="Create">Order Blood Test</a>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.BloodTest[0].ConsultationId)
@@ -62,29 +75,49 @@ else
             {
                 <tr>
                     @{
-                        Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == item.ConsultationId);
-                        Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
-                        User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
-                        User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
-                        <td>
-                            Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
-                        </td>
-                    }
+                        ExternalBloodTest externalBloodTest;
+                        if (item.ExternalBloodTestId != null)
+                        {
+                            externalBloodTest = Model.ExternalBloodTests.FirstOrDefault(e => e.ExternalBloodTestId == item.ExternalBloodTestId);
+                            <td>
+                                Doctor: @externalBloodTest.DoctorName, Patient: @externalBloodTest.PatientName - External Consultation
+                            </td>
+                        }
+                        else
+                        {
+                            Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == item.ConsultationId);
+                            Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
+                            User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                            <td>
+                                Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis
+                            </td>
+                        }
+                    
                     <td>
                         @Html.DisplayFor(modelItem => item.Comments)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PerformedDate)
-                    </td>
-                    @{
-                        User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
-                        <td>
-                            @bloodTestStaff.FirstName @bloodTestStaff.LastName
                         </td>
-                    }
+                        if (item.ExternalBloodTestId != null)
+                        {
+                           
+                            <td>
+                                
+                            </td>
+                        }
+                        else
+                        {
+                            User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
+                            <td>
+                                @bloodTestStaff.FirstName @bloodTestStaff.LastName
+                            </td>
+                        }
                     <td>
                         <a asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
                     </td>
+                    }
                 </tr>
             }
         </tbody>

@@ -6,9 +6,20 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+@if (!ViewData.ModelState.IsValid)
+{
+    var errorMessage = ViewData.ModelState["bloodTestNoMatch"].Errors.FirstOrDefault()?.ErrorMessage;
+    if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
+}
 
-<table class="table">
-    <thead>
+<br />
+<table class="table table-striped">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientName)
@@ -18,9 +29,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientAddressLineTwo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientStreet)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExternalBloodTest[0].PatientCity)
@@ -77,9 +85,6 @@
                 @Html.DisplayFor(modelItem => item.PatientAddressLineTwo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PatientStreet)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PatientCity)
             </td>
             <td>
@@ -118,6 +123,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.kidneyFunction)
             </td>
+            <td>
+                @if (item.Imported)
+                {
+                    <span class="badge bg-secondary">Imported</span>
+                }else
+                {
+                    <form asp-page-handler="ImportData" method="post">
+                        <input type="hidden" name="externalBloodTestId" value="@item.ExternalBloodTestId"></input>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </form>
+                }
+`           </td>
         </tr>
 }
     </tbody>
