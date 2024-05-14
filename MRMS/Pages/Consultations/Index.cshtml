@@ -2,14 +2,12 @@
 @using MRMS.Models;
 @model MRMS.Pages.Consultations.IndexModel
 
-@if (User.IsInRole("patient"))
-{
-    ViewData["Title"] = "Past Consultations";
-}
-else
-{
+
+
+@{
     ViewData["Title"] = "Consultations";
 }
+
 
 <h1>@ViewData["Title"]</h1>
 @if (User.IsInRole("patient"))
@@ -22,11 +20,25 @@ else
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.PatientHistory)</h5>
                     <p class="card-text">
                         @{
-                            User nurse = Model.Nurses.FirstOrDefault(d => d.Id == item.NurseId);
-                            <span><b>Nurse:</b> @nurse.FirstName @nurse.LastName</span>
-                            <br />
-                            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.DoctorId);
-                            <span><b>Doctor:</b> @doctor.FirstName @doctor.LastName</span>
+                            if (item.AppointmentId != 999)
+                            {
+                                Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == item.AppointmentId);
+                                <span><b>Appointment:</b> @appointment.StartTime:<br>  @appointment.Reason</span>
+                                <br/>
+                                User nurse = Model.Nurses.FirstOrDefault(d => d.Id == item.NurseId);
+                                <span><b>Nurse:</b> @nurse.FirstName @nurse.LastName</span>
+                                <br />
+                                User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.DoctorId);
+                                <span><b>Doctor:</b> @doctor.FirstName @doctor.LastName</span>
+                            }else
+                            {
+                                ExternalConsultation externalConsultation = Model.ExternalConsultations.FirstOrDefault(e => e.ExternalConsultationId == item.ExternalConsultationId);
+                                <span><b>Appointment:</b> @externalConsultation.Date:<br> External Consultation</span>
+                                <br/>
+                                <span><b>Nurse:</b> @externalConsultation.NurseName</span>
+                                <br/>
+                                <span><b>Doctor:</b> @externalConsultation.DoctorName</span>
+                            }
                         }
                     </p>
                     <a class="btn btn-light" asp-page="./Details" asp-route-id="@item.ConsultationId">Details</a>
@@ -82,10 +94,10 @@ else
                                @externalConsultation.Date:<br> @externalConsultation.PatientName - External Consultation
                             </td>
                             <td>
-                                @externalConsultation.DoctorName (External)
+                                @externalConsultation.DoctorName
                             </td>
                             <td>
-                                @externalConsultation.NurseName (External)
+                                @externalConsultation.NurseName
                             </td>
                         }
                         else {

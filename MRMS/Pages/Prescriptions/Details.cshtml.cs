@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,23 @@ namespace MRMS.Pages.Prescriptions
     public class DetailsModel : PageModel
     {
         private readonly MRMS.Data.MRMSContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public DetailsModel(MRMS.Data.MRMSContext context)
+        public DetailsModel(MRMS.Data.MRMSContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-      public Prescription Prescription { get; set; } = default!; 
+      public Prescription Prescription { get; set; } = default!;
+        public IList<Consultation> AllConsultations { get; set; } = default!;
+
+        public IList<User> Doctors { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            AllConsultations = await _context.Consultation.ToListAsync();
+            Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             if (id == null || _context.Prescription == null)
             {
                 return NotFound();

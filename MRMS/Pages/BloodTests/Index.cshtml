@@ -2,14 +2,9 @@
 @using MRMS.Models;
 @model MRMS.Pages.BloodTests.IndexModel
 
-@if (User.IsInRole("patient"))
-{
-    ViewData["Title"] = "Past Blood Tests";
-}
-else
-{
-    ViewData["Title"] = "Blood Tests";
-}
+ @{
+     ViewData["Title"] = "Blood Tests";
+     }
 
 <h1>@ViewData["Title"]</h1>
 @if (User.IsInRole("patient"))
@@ -22,11 +17,28 @@ else
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Comments)</h5>
                     <p class="card-text">
                         @{
-                            User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
-                            <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
+                            if(item.ExternalBloodTestId != null)
+                            {
+                                ExternalBloodTest externalBloodTest = Model.ExternalBloodTests.FirstOrDefault(e => e.ExternalBloodTestId == item.ExternalBloodTestId);
+                                <span><b>Consultation:</b> Dr. @externalBloodTest.DoctorName - External Consultation</span>
+                                <br/>
+                                <span><b>Performed By:</b> @externalBloodTest.PerformedBy</span>
+                                <br />
+                                <span><b>Performed:</b> @externalBloodTest.PerformedDate</span>
+                            }else
+                            {
+                                User bloodTestStaff = Model.Staff.FirstOrDefault(d => d.Id == item.PerformedById);
+                                BloodTest bloodTest = Model.BloodTest.FirstOrDefault(b => b.BloodTestId == item.BloodTestId);
+                                Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == bloodTest.ConsultationId);
+                                User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+                                <span><b>Consultation:</b> Dr. @doctor.FirstName @doctor.LastName - @consultation.Diagnosis</span>
+                                <br/>
+                                <span><b>Performed By:</b> @bloodTestStaff.FirstName @bloodTestStaff.LastName</span>
+                                <br />
+                                <span><b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)</span>
+                            }
                             <br />
                         }
-                        <b>Performed:</b> @Html.DisplayFor(modelItem => item.PerformedDate)<br />
                     </p>
                     <a class="btn btn-light" asp-page="./Results" asp-route-id="@item.BloodTestId">Results</a>
                 </div>

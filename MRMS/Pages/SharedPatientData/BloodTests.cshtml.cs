@@ -52,6 +52,7 @@ namespace MRMS.Pages.SharedPatientData
                     )
                 {
                     externalBloodTest.Imported = true;
+                    externalBloodTest.MatchedPatientId = patient.Id;
                     await _context.SaveChangesAsync();
                     BloodTest newBloodTest = new BloodTest();
                     newBloodTest.ConsultationId = 999;

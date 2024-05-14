@@ -23,10 +23,13 @@
                     <option value="">Select Consultation</option>
                     @foreach (var consultation in Model.Consultations)
                     {
+                        if(consultation.AppointmentId != 999)
+                        {
                         Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
                         User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
                         User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
                         <option value="@consultation.ConsultationId">Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis</option>
+                    }
                     }
                 </select>
                 <span asp-validation-for="Prescription.ConsultationId" class="text-danger"></span>

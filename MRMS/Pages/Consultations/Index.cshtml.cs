@@ -55,27 +55,18 @@ namespace MRMS.Pages.Consultations
                     Appointments = _context.Appointment.ToList();
                 }
                 IList<Consultation> AllConsultations = await _context.Consultation.ToListAsync();
-                IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
-                IList<int> CurrentUserAppointments = new List<int>();
-                
-                if (User.IsInRole("patient"))
-                {
-                    foreach (Appointment appointment in AllAppointments)
-                    {
-                        if (appointment.PatientId == UserId)
-                        {
-                            CurrentUserAppointments.Add(appointment.AppointmentId);
-                        }
-                    }
+                IList<Consultation> CurrentUserConsultations = (from Consultation in _context.Consultation
+                                                                join Appointment in _context.Appointment on Consultation.AppointmentId equals Appointment.AppointmentId into ap
+                                                                from subAppointment in ap.DefaultIfEmpty()
+                                                                join ExternalConsultation in _context.ExternalConsultation on Consultation.ExternalConsultationId equals ExternalConsultation.ExternalConsultationId into ec
+                                                                from subExternalConsultation in ec.DefaultIfEmpty()
+                                                                where (subAppointment != null && subAppointment.PatientId == UserId) || (subExternalConsultation != null && subExternalConsultation.MatchedPatientId == UserId)
+                                                                select Consultation).ToList();
 
-                    Consultation = new List<Consultation>();
-                    foreach (Consultation consultation in AllConsultations)
-                    {
-                        if(CurrentUserAppointments.Contains(consultation.AppointmentId))
-                        {
-                            Consultation.Add(consultation);
-                        }
-                    }
+                if (User.IsInRole("patient"))
+                { 
+                
+                    Consultation = CurrentUserConsultations;
                 }
                 else
                 {

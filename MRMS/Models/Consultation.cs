@@ -6,8 +6,8 @@ namespace MRMS.Models
     public class Consultation
     {
         public int ConsultationId { get; set; }
-        [Display(Name = "Appointment")]
         public int? ExternalConsultationId { get; set; }
+        [Display(Name = "Appointment")]
         public int AppointmentId { get; set; }
         [Display(Name = "Doctor")]
         public String DoctorId { get; set; }

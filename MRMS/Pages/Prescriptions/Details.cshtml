@@ -1,4 +1,5 @@
 ﻿@page
+@using MRMS.Models;
 @model MRMS.Pages.Prescriptions.DetailsModel
 
 @{
@@ -7,59 +8,70 @@
 
 <h1>@ViewData["Title"]</h1>
 
-    <div>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.Date)
-            </dt>
-            <dd class="col-sm-10">
-                @Model.Prescription.Date.ToShortDateString()
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.Medication)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.Medication)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.DoseQuantity)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.DoseQuantity) @Html.DisplayFor(model=> model.Prescription.DoseQuantityUnits)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.DoseFrequency)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.DoseFrequency)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.DoseStrength) 
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.DoseStrength) @Html.DisplayFor(model=> model.Prescription.DoseStrengthUnits)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.TotalQuantity)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.TotalQuantity) @Html.DisplayFor(model=> model.Prescription.DoseQuantityUnits)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.Refills)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.Refills) 
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Prescription.Duration)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prescription.Duration)
-            </dd>
-        </dl>
-    </div>
-    <div>
+<div>
+    <hr />
+    <dl class="row">
+
+        @{
+            Consultation consultation = Model.AllConsultations.FirstOrDefault(c => c.ConsultationId == Model.Prescription.ConsultationId);
+            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.ConsultationId)
+        </dt>
+        <dd class="col-sm-10">
+            Doctor: @doctor.FirstName @doctor.LastName - @consultation.Diagnosis
+        </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prescription.Date.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.Medication)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.Medication)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.DoseQuantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.DoseQuantity) @Html.DisplayFor(model=> model.Prescription.DoseQuantityUnits)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.DoseFrequency)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.DoseFrequency)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.DoseStrength)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.DoseStrength) @Html.DisplayFor(model=> model.Prescription.DoseStrengthUnits)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.TotalQuantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.TotalQuantity) @Html.DisplayFor(model=> model.Prescription.DoseQuantityUnits)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.Refills)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.Refills)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prescription.Duration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prescription.Duration)
+        </dd>
+    </dl>
+</div>
+<div>
     <a asp-page="./Index">Back to Prescriptions</a>
-    </div>
+</div>

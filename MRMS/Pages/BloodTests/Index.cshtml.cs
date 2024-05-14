@@ -50,41 +50,28 @@ namespace MRMS.Pages.BloodTests
             if (_context.BloodTest != null && _context.Consultation != null && _context.Appointment != null)
             {
                 IList<BloodTest> AllBloodTests = await _context.BloodTest.ToListAsync();
+
+                IList<BloodTest> CurrentUserBloodTests = (from BloodTest in _context.BloodTest
+                                                          join Consultation in _context.Consultation on BloodTest.ConsultationId equals Consultation.ConsultationId into bc
+                                                          from subConsultation in bc.DefaultIfEmpty()
+                                                          join Appointment in _context.Appointment on subConsultation.AppointmentId equals Appointment.AppointmentId into ab
+                                                          from subAppointment in ab.DefaultIfEmpty()
+                                                          join ExternalBloodTest in _context.ExternalBloodTest on BloodTest.ExternalBloodTestId equals ExternalBloodTest.ExternalBloodTestId into be
+                                                          from subExternalBloodTest in be.DefaultIfEmpty()
+                                                          where (subAppointment != null && subAppointment.PatientId == UserId) || (subExternalBloodTest != null && subExternalBloodTest.MatchedPatientId == UserId)
+                                                          select BloodTest).ToList();
+
                 AllAppointments = await _context.Appointment.ToListAsync();
                 AllConsultations = await _context.Consultation.ToListAsync();
-                IList<int> CurrentUserAppointments = new List<int>();
-                IList<int> CurrentUserConsultations = new List<int>();
 
-                if (!User.IsInRole("patient"))
+
+                if (User.IsInRole("patient"))
                 {
-                    BloodTest = AllBloodTests;
+                    BloodTest = CurrentUserBloodTests;
                 }
                 else
                 {
-                    foreach (Appointment appointment in AllAppointments)
-                    {
-                        if (appointment.PatientId == UserId)
-                        {
-                            CurrentUserAppointments.Add(appointment.AppointmentId);
-                        }
-                    }
-
-                    foreach (Consultation consultation in AllConsultations)
-                    {
-                        if (CurrentUserAppointments.Contains(consultation.AppointmentId))
-                        {
-                            CurrentUserConsultations.Add(consultation.ConsultationId);
-                        }
-                    }
-
-                    BloodTest = new List<BloodTest>();
-                    foreach (BloodTest bloodTest in AllBloodTests)
-                    {
-                        if (CurrentUserConsultations.Contains(bloodTest.ConsultationId))
-                        {
-                            BloodTest.Add(bloodTest);
-                        }
-                    }
+                    BloodTest = AllBloodTests;
                 }
 
             }

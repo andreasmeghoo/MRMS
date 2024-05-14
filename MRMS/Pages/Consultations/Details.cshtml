@@ -11,21 +11,52 @@
     <div>
         <hr />
         <dl class="row">
-            @{
+        @{
+            if (Model.Consultation.AppointmentId != 999)
+            {
+                Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == Model.Consultation.AppointmentId);
                 User nurse = Model.Nurses.FirstOrDefault(n => n.Id == Model.Consultation.NurseId);
                 User doctor = Model.Doctors.FirstOrDefault(d => d.Id == Model.Consultation.DoctorId);
-            <dt class="col-sm-2">
-                Doctor
-            </dt>
-            <dd class="col-sm-10">
-                @doctor.FirstName @doctor.LastName
-            </dd>
-            <dt class="col-sm-2">
-                Nurse
-            </dt>
-            <dd class="col-sm-10">
-                @nurse.FirstName @nurse.LastName
-            </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.AppointmentId)
+                </dt>
+                <dd class="col-sm-10">
+                    @appointment.StartTime: @appointment.Reason
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.DoctorId)
+                </dt>
+                <dd class="col-sm-10">
+                    @doctor.FirstName @doctor.LastName
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.DoctorId)
+                </dt>
+                <dd class="col-sm-10">
+                    @nurse.FirstName @nurse.LastName
+                </dd>
+            }
+            else
+            {
+                ExternalConsultation externalConsultation = Model.ExternalConsultations.FirstOrDefault(e => e.ExternalConsultationId == Model.Consultation.ExternalConsultationId);
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.AppointmentId)
+                </dt>
+                <dd class="col-sm-10">
+                    @externalConsultation.Date: External Consultation
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.DoctorId)
+                </dt>
+                <dd class="col-sm-10">
+                    @externalConsultation.DoctorName
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Consultation.DoctorId)
+                </dt>
+                <dd class="col-sm-10">
+                    @externalConsultation.NurseName
+                </dd>
             }
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Consultation.PatientHistory)
@@ -34,34 +65,20 @@
                 @Html.DisplayFor(model => model.Consultation.PatientHistory)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Consultation.ExamDetails)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Consultation.ExamDetails)
-            </dd>
-            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Consultation.CarePlan)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Consultation.CarePlan)
             </dd>
-            @if (Model.Consultation.Comments != null && Model.Consultation.Comments != "")
-            {
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Consultation.Comments)
-                </dt>         
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Consultation.Comments)
-            </dd>
-            }
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Consultation.Diagnosis)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Consultation.Diagnosis)
             </dd>
+            }
         </dl>
     </div>
     <div>
-        <a asp-page="./Index">Back to Past Consultations</a>
+        <a asp-page="./Index">Back to Consultations</a>
     </div>
