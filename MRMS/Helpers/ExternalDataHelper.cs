@@ -2,35 +2,35 @@
 {
     public class ExternalDataHelper
     {
-        public static bool FuzzyMatch(string str1, string str2)
+        public static bool FuzzyMatch(string stringA, string stringB)
         {
-            return LevenshteinDistance(str1, str2) < 5;
+            return Distance(stringA, stringB) < 5;
         }
 
-        public static int LevenshteinDistance(string s, string t)
+        public static int Distance(string stringA, string stringB)
         {
-            int[,] d = new int[s.Length + 1, t.Length + 1];
+            int[,] d = new int[stringA.Length + 1, stringB.Length + 1];
 
-            if (s.Length == 0)
-                return t.Length;
-            if (t.Length == 0)
-                return s.Length;
+            if (stringA.Length == 0)
+                return stringB.Length;
+            if (stringB.Length == 0)
+                return stringA.Length;
 
-            for (int i = 0; i <= s.Length; i++)
+            for (int i = 0; i <= stringA.Length; i++)
                 d[i, 0] = i;
-            for (int j = 0; j <= t.Length; j++)
+            for (int j = 0; j <= stringB.Length; j++)
                 d[0, j] = j;
 
-            for (int j = 1; j <= t.Length; j++)
+            for (int j = 1; j <= stringB.Length; j++)
             {
-                for (int i = 1; i <= s.Length; i++)
+                for (int i = 1; i <= stringA.Length; i++)
                 {
-                    int cost = (s[i - 1] == t[j - 1]) ? 0 : 1;
+                    int cost = (stringA[i - 1] == stringB[j - 1]) ? 0 : 1;
                     d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
                 }
             }
 
-            return d[s.Length, t.Length];
+            return d[stringA.Length, stringB.Length];
         }
     }
 }
