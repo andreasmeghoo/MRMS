@@ -29,6 +29,8 @@ namespace MRMS.Pages.Consultations
 
         public IList<Consultation> Consultation { get;set; } = default!;
 
+        public IList<ExternalConsultation> ExternalConsultations { get;set; } = default!;
+
         public IList<Appointment> Appointments { get; set; }
 
         public IList<User> Patients { get; set; }
@@ -44,6 +46,7 @@ namespace MRMS.Pages.Consultations
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
             Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            ExternalConsultations = _context.ExternalConsultation.ToList();
 
             if (_context.Consultation != null && _context.Appointment != null)
             {
@@ -55,25 +58,7 @@ namespace MRMS.Pages.Consultations
                 IList<Appointment> AllAppointments = await _context.Appointment.ToListAsync();
                 IList<int> CurrentUserAppointments = new List<int>();
                 
-                if (User.IsInRole("doctor"))
-                {
-                    foreach (Appointment appointment in AllAppointments)
-                    {
-                        if (appointment.PreferredDoctorId == UserId)
-                        {
-                            CurrentUserAppointments.Add(appointment.AppointmentId);
-                        }
-                    }
-                    Consultation = new List<Consultation>();
-                    foreach (Consultation consultation in AllConsultations)
-                    {
-                        if (CurrentUserAppointments.Contains(consultation.AppointmentId))
-                        {
-                            Consultation.Add(consultation);
-                        }
-                    }
-                }
-                else if (User.IsInRole("patient"))
+                if (User.IsInRole("patient"))
                 {
                     foreach (Appointment appointment in AllAppointments)
                     {

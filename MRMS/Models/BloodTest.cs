@@ -14,7 +14,7 @@ namespace MRMS.Models
         [Display(Name = "Performed By")]
         public String PerformedById { get; set; }
 
-        public int ExternalConsultationId { get; set; }
+        public int? ExternalBloodTestId { get; set; }
 
     }
 }

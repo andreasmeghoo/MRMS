@@ -12,16 +12,30 @@
     <dl class="row">
         @{
             BloodTest bloodTest = Model.AllBloodTests.FirstOrDefault(a => a.BloodTestId == Model.BloodTestResult.BloodTestId);
-            Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == bloodTest.ConsultationId);
-            Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
-            User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
-            User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
-        <dt class="col-sm-2">
-            Consultation
-        </dt>
-        <dd class="col-sm-10">
-            Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis - @appointment.StartTime
+            if (bloodTest.ExternalBloodTestId != null)
+            {
+                ExternalBloodTest externalBloodTest = Model.ExternalBloodTests.FirstOrDefault(e => e.ExternalBloodTestId == bloodTest.ExternalBloodTestId);
+                <dt class="col-sm-2">
+                    Consultation
+                </dt>
+                <dd class="col-sm-10">
+                    Doctor: @externalBloodTest.DoctorName, Patient: @externalBloodTest.PatientName - External Consultation - @externalBloodTest.PerformedDate
+                    </dd>
+            }
+            else
+            {
+                Consultation consultation = Model.AllConsultations.FirstOrDefault(a => a.ConsultationId == bloodTest.ConsultationId);
+                Appointment appointment = Model.AllAppointments.FirstOrDefault(a => a.AppointmentId == consultation.AppointmentId);
+                User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+                User doctor = Model.Doctors.FirstOrDefault(d => d.Id == consultation.DoctorId);
+
+                <dt class="col-sm-2">
+                    Consultation
+                </dt>
+                <dd class="col-sm-10">
+                    Doctor: @doctor.FirstName @doctor.LastName, Patient: @patient.FirstName @patient.LastName - @consultation.Diagnosis - @appointment.StartTime
         </dd>
+        }
         }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BloodTestResult.redBloodCellCount)

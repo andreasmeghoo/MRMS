@@ -28,6 +28,7 @@ namespace MRMS.Pages.BloodTests
         public IList<User> Patients { get; set; } = default!;
 
         public IList<User> Doctors { get; set; } = default!;
+        public IList<ExternalBloodTest> ExternalBloodTests { get; set; } = default!;
 
         public IList<Consultation> AllConsultations { get; set; } = default!;
 
@@ -37,6 +38,7 @@ namespace MRMS.Pages.BloodTests
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            ExternalBloodTests = _context.ExternalBloodTest.ToList();
             Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             AllAppointments = await _context.Appointment.ToListAsync();

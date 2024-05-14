@@ -83,9 +83,16 @@
                 @Html.DisplayFor(modelItem => item.Diagnosis)
             </td>
                 <td>
+                    @if(item.Imported)
+                    {
+                        <span class="badge bg-secondary">Imported</span>
+                    }else
+                    {
                     <form asp-page-handler="ImportData" method="post">
+                        <input type="hidden" name="externalConsultationId" value="@item.ExternalConsultationId"></input>
                         <button type="submit" class="btn btn-primary">Import Data</button>
                     </form>
+                    }
                 </td>
         </tr>
 }

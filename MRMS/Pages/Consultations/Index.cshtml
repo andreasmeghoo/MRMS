@@ -75,6 +75,20 @@ else
             {
                 <tr>
                     @{
+                        if(item.AppointmentId == 999)
+                        {
+                            ExternalConsultation externalConsultation = Model.ExternalConsultations.FirstOrDefault(e => e.ExternalConsultationId == item.ExternalConsultationId);
+                            <td>
+                               @externalConsultation.Date:<br> @externalConsultation.PatientName - External Consultation
+                            </td>
+                            <td>
+                                @externalConsultation.DoctorName (External)
+                            </td>
+                            <td>
+                                @externalConsultation.NurseName (External)
+                            </td>
+                        }
+                        else {
                         Appointment appointment = Model.Appointments.FirstOrDefault(a => a.AppointmentId == item.AppointmentId);
                         User patient = Model.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
                         <td>
@@ -88,6 +102,7 @@ else
                         <td>
                             @nurse.FirstName @nurse.LastName
                         </td>
+                        }
                     }
                     <td>
                         @Html.DisplayFor(modelItem => item.PatientHistory)
@@ -104,10 +119,13 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.Diagnosis)
                     </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.ConsultationId">Edit</a> |
+                    @if (item.AppointmentId != 999)
+                    {
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.ConsultationId">Edit</a> |
                         <a asp-page="./Delete" asp-route-id="@item.ConsultationId">Delete</a>
                     </td>
+                    }
                 </tr>
             }
         </tbody>

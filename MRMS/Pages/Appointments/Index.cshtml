@@ -88,8 +88,6 @@ else
         <tbody>
             @foreach (var item in Model.Appointment)
             {
-                if((User.IsInRole("doctor") && item.PreferredDoctorId == Model.UserId) || (!User.IsInRole("doctor"))) 
-                {
                 <tr>
                         @{
                             User doctor = Model.Doctors.FirstOrDefault(d => d.Id == item.PreferredDoctorId);
@@ -159,7 +157,6 @@ else
                         </div>
                     </td>
                 </tr>
-            }
             }
         </tbody>
     </table>

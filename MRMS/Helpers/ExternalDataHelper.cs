@@ -1,0 +1,36 @@
+﻿namespace MRMS.Helpers
+{
+    public class ExternalDataHelper
+    {
+        public static bool FuzzyMatch(string str1, string str2)
+        {
+            return LevenshteinDistance(str1, str2) < 5;
+        }
+
+        public static int LevenshteinDistance(string s, string t)
+        {
+            int[,] d = new int[s.Length + 1, t.Length + 1];
+
+            if (s.Length == 0)
+                return t.Length;
+            if (t.Length == 0)
+                return s.Length;
+
+            for (int i = 0; i <= s.Length; i++)
+                d[i, 0] = i;
+            for (int j = 0; j <= t.Length; j++)
+                d[0, j] = j;
+
+            for (int j = 1; j <= t.Length; j++)
+            {
+                for (int i = 1; i <= s.Length; i++)
+                {
+                    int cost = (s[i - 1] == t[j - 1]) ? 0 : 1;
+                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                }
+            }
+
+            return d[s.Length, t.Length];
+        }
+    }
+}

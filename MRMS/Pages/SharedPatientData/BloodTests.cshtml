@@ -112,9 +112,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.kidneyFunction)
             </td>
-                <td>
-                    <button class="btn btn-primary">Import Data</button>
-                </td>
+            <td>
+                @if (item.Imported)
+                {
+                    <span class="badge bg-secondary">Imported</span>
+                }else
+                {
+                    <form asp-page-handler="ImportData" method="post">
+                        <input type="hidden" name="externalBloodTestId" value="@item.ExternalBloodTestId"></input>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </form>
+                }
+`           </td>
         </tr>
 }
     </tbody>
