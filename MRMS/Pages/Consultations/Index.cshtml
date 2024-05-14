@@ -49,11 +49,14 @@
 }
 else
 {
-    <p>
-        <a asp-page="Create">New Consultation</a>
-    </p>
-    <table class="table">
-        <thead>
+    <div>
+        <a class="btn btn-primary" asp-page="Create">New Consultation</a>
+        <a class="btn btn-primary" asp-page="../BloodTests/Create">Order Blood Test</a>
+        <a class="btn btn-primary" asp-page="../Prescriptions/Create">Prescribe Medication</a>
+    </div>
+    <br />
+    <table class="table table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Consultation[0].AppointmentId)
