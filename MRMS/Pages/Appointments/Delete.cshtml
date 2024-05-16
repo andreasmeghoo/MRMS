@@ -6,9 +6,19 @@
     ViewData["Title"] = "Cancel Appointment";
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<h3>Are you sure you want to to cancel this?</h3>
+@{
+    bool CancellationNotPermiited = Model.Consultations.Any(c => c.AppointmentId == Model.Appointment.AppointmentId); 
+    if(CancellationNotPermiited)
+    {
+        <h1>Cancellation not permitted</h1>
+        <p>Appointments cannot be deleted if a related consultation was already carried out.</p>
+        <a asp-page="./Index">Back to Appointments</a>
+    }
+    else
+    {
+        <h1>@ViewData["Title"]</h1>
+    <h3>Are you sure you want to to cancel this?</h3>
 <div>
     <hr />
     <dl class="row">
@@ -60,6 +70,8 @@
     <form method="post">
         <input type="hidden" asp-for="Appointment.AppointmentId" />
         <input type="submit" value="Cancel" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to Appointments List</a>
+        <a asp-page="./Index">Back to Appointments</a>
     </form>
 </div>
+}
+}

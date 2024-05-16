@@ -30,11 +30,14 @@ namespace MRMS.Pages.Appointments
 
         public List<User> Patients { get; set; }
 
+        public List <Consultation> Consultations { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            Consultations = _context.Consultation.ToList();
 
             if (id == null || _context.Appointment == null)
             {

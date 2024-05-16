@@ -32,6 +32,10 @@ namespace MRMS.Pages.Consultations
 
         public IList<Appointment> Appointments { get; set; }
 
+        public IList<BloodTest> BloodTests { get; set; }
+        
+        public IList<Prescription> Prescriptions { get; set; }
+
         public IList<User> Patients { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -39,6 +43,8 @@ namespace MRMS.Pages.Consultations
             Doctors = _userManager.GetUsersInRoleAsync("doctor").Result.ToList();
             Nurses = _userManager.GetUsersInRoleAsync("nurse").Result.ToList();
             Patients = _userManager.GetUsersInRoleAsync("patient").Result.ToList();
+            BloodTests = _context.BloodTest.ToList();
+            Prescriptions = _context.Prescription.ToList();
             if (id == null || _context.Consultation == null)
             {
                 return NotFound();
